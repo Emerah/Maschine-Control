@@ -38,6 +38,7 @@ __note repeat__:
 __drum rack__:
 
     play drum racks and scroll drum cells up and down [step-chords buttons to scroll drum cells]
+    when a drum rack has more than 16 pads to play, each cell page colors the pads differently.
 
 __instrument__:
 
