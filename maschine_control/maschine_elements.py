@@ -14,18 +14,17 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
 import Live  # noqa
-
 from ableton.v2.base.dependency import depends
 from ableton.v2.control_surface.elements.button import ButtonElement
 from ableton.v2.control_surface.elements.button_matrix import ButtonMatrixElement
 from ableton.v2.control_surface.elements.combo import ComboElement
 from ableton.v2.control_surface.elements.encoder import EncoderElement
-from ableton.v2.control_surface.elements.slider import SliderElement
 from ableton.v2.control_surface.input_control_element import MIDI_CC_TYPE, MIDI_NOTE_TYPE
 from ableton.v2.control_surface.resource import PrioritizedResource
 
 DEFAULT_CHANNEL = 15
-RELATIVE_SMOOTH = None
+RELATIVE_SMOOTH = Live.MidiMap.MapMode.relative_smooth_two_compliment
+ABSOLUTE = Live.MidiMap.MapMode.absolute
 
 
 @depends(skin=None)
@@ -48,10 +47,10 @@ def create_encoder(name, identifier, **k):
 
 
 def create_knob(name, identifier, **k):
-    knob = SliderElement(msg_type=MIDI_CC_TYPE, channel=DEFAULT_CHANNEL, identifier=identifier, name=name, **k)
-    knob.set_feedback_delay(-1)
-    knob.mapping_sensitivity = 0.1
-    return knob
+    encoder = EncoderElement(msg_type=MIDI_CC_TYPE, channel=DEFAULT_CHANNEL, identifier=identifier, map_mode=ABSOLUTE, encoder_sensitivity=1.0, name=name, **k)
+    encoder.set_feedback_delay(-1)
+    encoder.mapping_sensitivity = 0.1
+    return encoder
 
 
 def create_matrix(name, controls, **k):
@@ -103,5 +102,20 @@ class MaschineElements(object):
         self.console_buttons = [create_button('Console_{}'.format(index + 1), index + 22) for index in xrange(8)]
         self.console_matrix = create_matrix(name='Console_Matrix', controls=self.console_buttons)
 
+        self.remove_device_button = with_shift('Remove', self.console_buttons[4])
+        self.return_track_button = with_shift('New_Return', self.console_buttons[0])
+        self.audio_track_button = with_shift('New_Audio', self.console_buttons[1])
+        self.midi_track_button = with_shift('New_Midi', self.console_buttons[2])
+
         self.console_knobs = [create_knob('Knob_{}'.format(index + 1), index + 70) for index in xrange(8)]
         self.knob_matrix = create_matrix(name='Knob_Matrix', controls=self.console_knobs)
+
+        # main encoder section controls
+        self.right_button = create_button('right', 31)
+        self.left_button = create_button('Left', 33)
+        self.move_backward_button = with_shift('Move_Backward', self.left_button)
+        self.move_forward_button = with_shift('Move_Forward', self.right_button)
+        # self.up_button = create_button('Up', 30)
+        # self.down_button = create_button('Down', 32)
+        # self.click_button = create_button('Click', 119)
+        # self.encoder = create_encoder('Encoder', 118)

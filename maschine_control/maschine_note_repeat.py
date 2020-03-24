@@ -13,6 +13,8 @@
 #
 from __future__ import absolute_import, print_function, unicode_literals
 
+from _functools import partial
+
 from ableton.v2.base import task
 from ableton.v2.base.event import listens
 from ableton.v2.base.util import in_range
@@ -157,7 +159,9 @@ class MaschineNoteRepeatEnabler(Component):
 
     note_repeat_button = ButtonControl(color='DefaultButton.Off')
 
-    def __init__(self, note_repeat=None, *a, **k):
+    def __init__(self, info_display=None, note_repeat=None, *a, **k):
+        assert info_display is not None
+        self._info_display = info_display
         super(MaschineNoteRepeatEnabler, self).__init__(*a, **k)
         self.note_repeat_component = MaschineNoteRepeat(note_repeat=note_repeat, name='Note_Repeat', parent=self, is_enabled=False)
         self.__on_selected_track_changed.subject = self.song.view
@@ -188,6 +192,10 @@ class MaschineNoteRepeatEnabler(Component):
     def _toggle_note_repeat(self):
         enabled = self.note_repeat_component.is_enabled()
         self._set_note_repeat_enabled(False if enabled else True)
+        message = 'Note Repeate is {}'.format('Off' if enabled else 'Active')
+        display_task = partial(self._info_display.display_message_on_maschine, message, 3)
+        clear_task = partial(self._info_display.clear_display, 3)
+        self._tasks.add(task.sequence(task.run(display_task), task.wait(2.5), task.run(clear_task)))
 
     # ? maybe consider saving and restoring note repeat on track selection ??
     def _restore_note_repeat_enabled_state(self):

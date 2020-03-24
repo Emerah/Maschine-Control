@@ -13,18 +13,16 @@ __shift button__: restart button in the transport section is used for shited ope
 ---
 __transport__:  
         
-    play, stop, record, tap tempo and toggle metronome [transport section buttons. use shift 
-    for metronome]
+    play, stop, record, tap tempo and toggle metronome [transport section buttons. use shift for metronome]
 
 __recording__:
 
-    record performace and automation [record and automation buttons, long press record
-    button in arrangement view activates recording in overdub mode]
+    record performace and automation [record and automation buttons, long press record button in arrangement 
+    view activates recording in overdub mode]
 
 __track creation__:
     
-    create and delete audio, return, and midi tracks [shift + console buttons: 1, 2, 3]
-    (NotImplementedYet)
+    create and delete audio, return, and midi tracks [shift + console buttons: 1, 2, 3] (NotImplementedYet)
 
 __auto arm__:
 
@@ -32,13 +30,13 @@ __auto arm__:
 
 __note repeat__:
 
-    note repeat with 8 rates straight and triplets (32t/32/16t/16/8t/8/4t/4) [use note repeat
-    button to enable, and the 8 group buttons to select rate - default to 1/8]
+    note repeat with 8 rates straight and triplets (32t/32/16t/16/8t/8/4t/4) [use note repeat button to 
+    enable or disable, and the 8 group buttons to select rate - default to 1/8]
 
 __drum rack__:
 
-    play drum racks and scroll drum cells up and down [step-chords buttons to scroll drum cells]
-    when a drum rack has more than 16 pads to play, each cell page colors the pads differently.
+    play drum racks and scroll drum cells up and down [step-chords buttons to scroll drum cells] when a drum 
+    rack has more than 16 pads to play, each cell page colors the pads differently.
 
     drum pad solo, mute, select and delete (NotImplementedYet)
     playable simpler chopped loopes (NotImplementedYet)
@@ -46,10 +44,49 @@ __drum rack__:
 
 __instrument__:
 
-    play instruments in key with selectable keys and scales with guide light of scale notes
-    [step - chords buttons to scroll octaves up and dow]
+    play instruments in key with selectable keys and scales with guide light of scale notes [ use step and 
+    chords buttons to scroll octaves up and dow]
     
     currently implemented only for cmaj
+
+---
+
+### Modes
+
+#### Device Control Mode:
+    in device mode you can:
+        - select devices from the device chain. [encoder buttons: left and right]
+        - move devices backward and forward in the device chain. [shift + encoder buttons: left and right]
+        - select parameter banks of the selected device. [console buttons: 7 and 8]
+        - bypass/activate selected device. [console buttons: 5]
+        - remove the selected device from the device chain. [shift + console button: 5]
+        - select tracks from the live set. [console buttons: 1, 2, 3]
+        - create new audio, return, and midi tracks [shift + console buttons: 1, 2, 3]
+
+        comming:  
+        - randomize selected device's parameters values. [console button: 6] (NotImplementedYet)
+        - reset selected device to default state. [shift + console button: 6] (NotImplementedYet)
+        - move devices in and out of a rack when one exists in the device chain.  (NotImplementedYet)
+        - select pages of devices when more than 8 devices are present on the selected track. (NotImplementedYet)
+
+#### Information Display:
+
+    - welcome and current live version message
+    - current mode name
+      
+    in device mode users will always see the following information on Maschine MK3 screens:
+        - mode name
+        - selected track name
+        - selected device name
+        - selected parameter bank name
+        - selected parameter name and value
+        - device active state notification
+        - note repeate active state notification
+        - new track notification
+
+    information updates on changes in track, device, bank, and parameter selection, or change in parameters value. message 
+    display operations are tasked the components and to the controller surface to enable timed and automated messages.
+
 
 
 #### Important Notes about the controller editor template
