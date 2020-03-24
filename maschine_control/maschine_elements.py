@@ -94,7 +94,7 @@ class MaschineElements(object):
         self.group_matrix = create_matrix('Group_Matrix', self.group_buttons)
 
         # drum rack matrix
-        self.drum_cells = [[create_pad(('{}_Pad_{}').format(col_index, row_index), offset + col_index) for col_index in xrange(4)] for row_index, offset in enumerate(xrange(48, 32, -4))]
-        self.drum_rack_matrix = create_matrix('Drum_Rack_Matrix', self.drum_cells)
+        self.pads = [[create_pad(('{}_Pad_{}').format(col_index, row_index), offset + col_index) for col_index in xrange(4)] for row_index, offset in enumerate(xrange(48, 32, -4))]
+        self.pad_matrix = create_matrix('Pad_Matrix', self.pads)
         self.chords_button = create_button('Chords', 83)
         self.step_button = create_button('Step', 84)

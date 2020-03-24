@@ -16,7 +16,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 import os
 import sys
 
-from .maschine_control import MaschineControl
+from .maschine_control_surface import MaschineControlSurface
 
 # ===============================================================================
 #  create path
@@ -38,4 +38,4 @@ sys.stdout = stdoutLog
 
 
 def create_instance(c_instance):
-    return MaschineControl(c_instance)
+    return MaschineControlSurface(c_instance)

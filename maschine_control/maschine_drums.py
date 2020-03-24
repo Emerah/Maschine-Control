@@ -12,13 +12,13 @@
 # tools: VS Code (Free)
 #
 from __future__ import absolute_import, print_function, unicode_literals
+
 from ableton.v2.base.event import listens
+from ableton.v2.base.live_api_utils import liveobj_valid
 from ableton.v2.control_surface.components.drum_group import DrumGroupComponent
 from ableton.v2.control_surface.control.button import PlayableControl
-from ableton.v2.base.live_api_utils import liveobj_valid
 
-MAX_START_NOTE = 108
-SHARP_INDICES = (1, 3, 4, 6, 10, 13, 15)
+
 PADS_PER_ROW = 4
 COMPLETE_QUADRANTS_RANGE = xrange(4, 116)
 MAX_QUADRANT_INDEX = 7
@@ -32,7 +32,6 @@ class PadMixin(object):
         super(PadMixin, self).set_matrix(matrix)
         for button in self.matrix:
             button.set_mode(PlayableControl.Mode.playable_and_listenable)
-            button.color = 'DefaultButton.Off'
             button.pressed_color = 'DrumGroup.NotePressed'
 
     def _on_matrix_pressed(self, _):
@@ -48,7 +47,6 @@ class MaschineDrumRack(PadMixin, DrumGroupComponent):
         super(MaschineDrumRack, self).__init__(translation_channel=translation_channel, *a, **k)
         self.__on_selected_track_changed.subject = self.song.view
         self.__on_selected_track_changed()
-        self.__on_devices_changed()
 
     @listens('selected_track')
     def __on_selected_track_changed(self):
@@ -56,11 +54,14 @@ class MaschineDrumRack(PadMixin, DrumGroupComponent):
         self.__on_devices_changed.subject = track
         if not self._has_drum_rack():
             self._turn_matarix_buttons_off()
+        # else:
+        #     self._update_led_feedback()
 
     @listens('devices')
     def __on_devices_changed(self):
         if not self._has_drum_rack():
             self._turn_matarix_buttons_off()
+    #     # self._update_led_feedback()
 
     def _has_drum_rack(self):
         track = self.song.view.selected_track

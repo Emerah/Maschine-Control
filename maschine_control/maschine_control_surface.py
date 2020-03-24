@@ -1,6 +1,6 @@
 #
 # maschine / ableton
-# maschine_control.py
+# maschine_control_surface.py
 #
 # created by Ahmed Emerah - (MaXaR)
 #
@@ -15,34 +15,38 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 from contextlib import contextmanager
 
+import Live  # noqa
 from ableton.v2.base.dependency import inject
-from ableton.v2.base.event import listens
+# from ableton.v2.base.event import listens
+# from .maschine_note_modes import MaschineNoteModes
+# from ableton.v2.base.live_api_utils import liveobj_valid
 from ableton.v2.base.util import const
 from ableton.v2.control_surface.components.auto_arm import AutoArmComponent
-from ableton.v2.control_surface.components.target_track import ArmedTargetTrackComponent
+# from ableton.v2.control_surface.components.target_track import ArmedTargetTrackComponent
 from ableton.v2.control_surface.control_surface import ControlSurface
 from ableton.v2.control_surface.layer import Layer
-from ableton.v2.control_surface.percussion_instrument_finder import PercussionInstrumentFinder
+from ableton.v2.control_surface.mode import Mode, ModesComponent  # , NullModes
+# from ableton.v2.control_surface.percussion_instrument_finder import PercussionInstrumentFinder
 
 from .maschine_drums import MaschineDrumRack
 from .maschine_elements import MaschineElements
 from .maschine_info_display import MaschineInfoDisplay
+from .maschine_keyboard import MaschineKeyboard
 from .maschine_note_repeat import MaschineNoteRepeatEnabler
+from .maschine_playable_modes import MaschinePlayableModes
 from .maschine_recording import MaschineRecording
 from .maschine_skin import maschine_skin
 from .maschine_transport import MaschineTransport
-
-# from ableton.v2.base.live_api_utils import liveobj_valid
 
 KEYBOARD_CHANNEL = 2
 DRUMS_CHANNEL = 1
 FEEDBACK_CHANNELS = [KEYBOARD_CHANNEL, DRUMS_CHANNEL]
 
 
-class MaschineControl(ControlSurface):
+class MaschineControlSurface(ControlSurface):
 
     def __init__(self, *a, **k):
-        super(MaschineControl, self).__init__(*a, **k)
+        super(MaschineControlSurface, self).__init__(*a, **k)
         self._maschine_injector = inject(element_container=const(None)).everywhere()
         with self.component_guard():
             self._info_display = MaschineInfoDisplay()
@@ -54,23 +58,21 @@ class MaschineControl(ControlSurface):
             self.create_transport_component()
             self.create_recording_component()
             self.create_note_repeat_component()
+            self.create_keyboard_component()
             self.create_drum_rack_component()
-            self._target_track = ArmedTargetTrackComponent(name='Target_Track')
-            self.__on_target_track_changed.subject = self._target_track
+            self.create_playable_mode()
+            self.create_main_modes()
         self.set_feedback_channels(FEEDBACK_CHANNELS)
-        self._drum_group_finder = self.register_disconnectable(PercussionInstrumentFinder(device_parent=self._target_track.target_track))
-        self.__on_drum_group_changed.subject = self._drum_group_finder
-        self.__on_drum_group_changed()
         self.show_message('Maschine MKiii - ' + str(self.live_version))
 
     def disconnect(self):
         self._info_display.clear_all_displays()
         self._autoarm.set_enabled(False)
-        super(MaschineControl, self).disconnect()
+        super(MaschineControlSurface, self).disconnect()
 
     @contextmanager
     def _component_guard(self):
-        with super(MaschineControl, self)._component_guard():
+        with super(MaschineControlSurface, self)._component_guard():
             with self._maschine_injector:
                 yield
 
@@ -81,16 +83,6 @@ class MaschineControl(ControlSurface):
         major = self.application.get_major_version()
         current_version = u'Ableton Live {}.{}.{}'.format(major, minor, bugfix)
         return current_version
-
-    @listens('target_track')
-    def __on_target_track_changed(self):
-        self._drum_group_finder.device_parent = self._target_track.target_track
-
-    @listens('instrument')
-    def __on_drum_group_changed(self):
-        drum_group = self._drum_group_finder.drum_group
-        self._drum_rack.set_drum_group_device(drum_group)
-        # self._note_modes.selected_mode = 'drum' if liveobj_valid(drum_group) else None
 
     def create_auto_arm_component(self):
         self._autoarm = AutoArmComponent(name='AutoArm')
@@ -115,5 +107,20 @@ class MaschineControl(ControlSurface):
 
     def create_drum_rack_component(self):
         self._drum_rack = MaschineDrumRack(translation_channel=DRUMS_CHANNEL, name='Drum_Rack', is_enabled=False)
-        self._drum_rack.layer = Layer(matrix='drum_rack_matrix', scroll_page_down_button='chords_button', scroll_page_up_button='step_button')
-        self._drum_rack.set_enabled(True)
+        self._drum_rack.layer = Layer(matrix='pad_matrix', scroll_page_down_button='chords_button', scroll_page_up_button='step_button')
+
+    def create_keyboard_component(self):
+        self._keyboard = MaschineKeyboard(translation_channel=KEYBOARD_CHANNEL, name='Keyboard', is_enabled=False)
+        self._keyboard.layer = Layer(matrix='pad_matrix', scroll_down_button='chords_button', scroll_up_button='step_button')
+
+    def create_playable_mode(self):
+        self._playable_modes = MaschinePlayableModes(drum_rack=self._drum_rack, keyboard=self._keyboard, name='Playable_Modes', is_enabled=False)
+        self._playable_modes.set_enabled(True)
+
+    def create_main_modes(self):
+        self._main_modes = ModesComponent(name='Main_Modes')
+        self._main_modes.add_mode('device_mode', Mode())
+        self._main_modes.add_mode('mixer_mode', Mode())
+        self._main_modes.add_mode('browser_mode', Mode())
+        self._main_modes.layer = Layer(device_mode_button='plugin_button', mixer_mode_button='mixer_button', browser_mode_button='browser_button')
+        self._main_modes.selected_mode = 'device_mode'

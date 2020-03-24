@@ -1,8 +1,8 @@
 # Maschine-Control
 
-a set of python scripts built as a useful tool for users of Maschine MK3 and Ableton Live 10. 
-n a Maschine MK3, every control is accessible and programmable from Ableton python except for 
-the 2 screens. Until NI gives us access to its HID interface, we are stuck with the ugly mackie 
+a set of python scripts built as a useful tool for users of Maschine MK3 and Ableton Live 10.
+n a Maschine MK3, every control is accessible and programmable from Ableton python except for
+the 2 screens. Until NI gives us access to its HID interface, we are stuck with the ugly mackie
 protocol to display information on Maschine MK3 displays. __WHAT A WASTE__
 
 
@@ -24,7 +24,7 @@ __recording__:
 __track creation__:
     
     create and delete audio, return, and midi tracks [shift + console buttons: 1, 2, 3]
-    (track deletion NotImplementedYet)
+    (NotImplementedYet)
 
 __auto arm__:
 
@@ -40,9 +40,16 @@ __drum rack__:
     play drum racks and scroll drum cells up and down [step-chords buttons to scroll drum cells]
     when a drum rack has more than 16 pads to play, each cell page colors the pads differently.
 
+    drum pad solo, mute, select and delete (NotImplementedYet)
+    playable simpler chopped loopes (NotImplementedYet)
+
+
 __instrument__:
 
-    play instruments in key with selectable keys and scales (NotImplementedYet)
+    play instruments in key with selectable keys and scales with guide light of scale notes
+    [step - chords buttons to scroll octaves up and dow]
+    
+    currently implemented only for cmaj
 
 
 #### Important Notes about the controller editor template

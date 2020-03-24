@@ -129,17 +129,27 @@ class Colors:
         RateSelected = MaschineIndexedColor.MINT
         RateUnselected = MaschineIndexedColor.MINTDim
 
-    class Accent:
-        On = ON
-        Off = OFF
+    class Mode:
+
+        class DeviceMode:
+            On = ON
+            Off = OFF
+
+        class MixerMode:
+            On = ON
+            Off = OFF
+
+        class BrowserMode:
+            On = ON
+            Off = OFF
 
     class Keyboard:
-        NoteNotPressed = MaschineIndexedColor.WARMYELLOWDim
+        NotePressed = MaschineIndexedColor.PURPLE
         Natural = MaschineIndexedColor.YELLOW
         Sharp = MaschineIndexedColor.BLUE
 
     class DrumGroup:
-        NotePressed = MaschineIndexedColor.WHITE
+        NotePressed = MaschineIndexedColor.BLUE
         PadEmpty = MaschineIndexedColor.BLACK
         PadFilled = MaschineIndexedColor.YELLOW
         PadSelected = MaschineIndexedColor.WHITE
