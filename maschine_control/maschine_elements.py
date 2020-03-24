@@ -43,14 +43,14 @@ def create_pad(name, identifier, skin=None, **k):
 def create_encoder(name, identifier, **k):
     encoder = EncoderElement(msg_type=MIDI_CC_TYPE, channel=DEFAULT_CHANNEL, identifier=identifier, map_mode=RELATIVE_SMOOTH, encoder_sensitivity=1.0, name=name, **k)
     encoder.set_feedback_delay(-1)
-    encoder.mapping_sensitivity = 0.2
+    encoder.mapping_sensitivity = 0.1
     return encoder
 
 
 def create_knob(name, identifier, **k):
     knob = SliderElement(msg_type=MIDI_CC_TYPE, channel=DEFAULT_CHANNEL, identifier=identifier, name=name, **k)
     knob.set_feedback_delay(-1)
-    knob.mapping_sensitivity = 0.2
+    knob.mapping_sensitivity = 0.1
     return knob
 
 
@@ -90,11 +90,18 @@ class MaschineElements(object):
         # note repeat
         self.note_repeat_button = create_button('Note_Repeat', 46)
 
-        self.group_buttons = [create_button('Group_{}'.format(index), index + 100) for index in xrange(8)]
+        self.group_buttons = [create_button('Group_{}'.format(index + 1), index + 100) for index in xrange(8)]
         self.group_matrix = create_matrix('Group_Matrix', self.group_buttons)
 
         # drum rack matrix
-        self.pads = [[create_pad(('{}_Pad_{}').format(col_index, row_index), offset + col_index) for col_index in xrange(4)] for row_index, offset in enumerate(xrange(48, 32, -4))]
-        self.pad_matrix = create_matrix('Pad_Matrix', self.pads)
+        self.pads = [[create_pad(('{}_Pad_{}').format(col_index + 1, row_index + 1), offset + col_index) for col_index in xrange(4)] for row_index, offset in enumerate(xrange(48, 32, -4))]
+        self.pad_matrix = create_matrix(name='Pad_Matrix', controls=self.pads)
         self.chords_button = create_button('Chords', 83)
         self.step_button = create_button('Step', 84)
+
+        # console section controls
+        self.console_buttons = [create_button('Console_{}'.format(index + 1), index + 22) for index in xrange(8)]
+        self.console_matrix = create_matrix(name='Console_Matrix', controls=self.console_buttons)
+
+        self.console_knobs = [create_knob('Knob_{}'.format(index + 1), index + 70) for index in xrange(8)]
+        self.knob_matrix = create_matrix(name='Knob_Matrix', controls=self.console_knobs)
