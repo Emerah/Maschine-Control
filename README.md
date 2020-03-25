@@ -73,6 +73,7 @@ __arranger/session__
         - move devices in and out of a rack when one exists in the device chain.  (NotImplementedYet)
         - select pages of devices when more than 8 devices are present on the selected track. (NotImplementedYet)
 
+
 #### Information Display:
 
     - welcome and current live version message
@@ -92,9 +93,16 @@ __arranger/session__
     information updates on changes in track, device, bank, and parameter selection, or change in parameters value. message 
     display operations are tasked the components and to the controller surface to enable timed and automated messages.
 
+#### Mixer Control Mode:
+    
+    - NotImplementedYet
 
+#### Browser Control Mode:
+
+    - NotImplementedYet
 
 #### Important Notes about the controller editor template
+---
 
 the controls in the attached controller editor template uses channel 16 to send and channels 2, 3 for
 feedback.
