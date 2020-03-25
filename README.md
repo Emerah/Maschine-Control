@@ -22,7 +22,7 @@ __recording__:
 
 __track creation__:
     
-    create and delete audio, return, and midi tracks [shift + console buttons: 1, 2, 3] (NotImplementedYet)
+    create audio, return, and midi tracks [shift + console buttons: 1, 2, 3]
 
 __auto arm__:
 
