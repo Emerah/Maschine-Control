@@ -334,9 +334,9 @@ class MaschineTrackListerComponent(MaschineBasicTrackLister):
 
 class MaschineTrackNavigation(MaschineTrackListerComponent):
     __module__ = __name__
-    next_track_button = ButtonControl(color='DefaultButton.Off')
-    previous_track_button = ButtonControl(color='DefaultButton.Off')
-    master_track_button = ButtonControl(color='DefaultButton.Off')
+    next_track_button = ButtonControl(color='DefaultButton.On', pressed_color='DefaultButton.Off')
+    previous_track_button = ButtonControl(color='DefaultButton.On', pressed_color='DefaultButton.Off')
+    master_track_button = ButtonControl(color='DefaultButton.On', pressed_color='DefaultButton.Off')
     next_track_page_button = ButtonControl(color='DefaultButton.Off')
     previous_track_page_button = ButtonControl(color='DefaultButton.Off')
 
@@ -347,9 +347,10 @@ class MaschineTrackNavigation(MaschineTrackListerComponent):
         super(MaschineTrackNavigation, self).__init__(track_provider=self._track_list, *a, **k)
         self._last_pressed_button_index = -1
         self.register_disconnectable(self._track_list)
-        self.__on_selected_track_changed()
         self.__on_selected_track_changed.subject = self.song.view
+        self.__on_selected_track_changed()
         self._update_select_buttons()
+        self.update_track_selection_buttons()
 
     def set_next_track_button(self, button):
         self.next_track_button.set_control_element(button)
@@ -384,9 +385,16 @@ class MaschineTrackNavigation(MaschineTrackListerComponent):
     def selected_track(self):
         return self.track_provider.selected_track
 
+    @listens('tracks')
+    def __on_tracks_changed(self):
+        self._update_select_buttons()
+        self.update_track_selection_buttons()
+        self._scroll_overlay.update_scroll_buttons()
+
     @listens('selected_track')
     def __on_selected_track_changed(self):
         if self.selected_track != self._current_track():
+            self.song.view.selected_track = self._current_track()
             self._update_track_provider(self._current_track())
             self._update_select_buttons()
         self.__on_name_changed.subject = self.selected_track
@@ -394,11 +402,18 @@ class MaschineTrackNavigation(MaschineTrackListerComponent):
         if not self.selected_track.devices:
             self._info_display.clear_display(1)
             self._info_display.clear_display(3)
+        self.update_track_selection_buttons()
 
     @listens('name')
     def __on_name_changed(self):
         track = self.selected_track
         self._display_track_name(track)
+
+    def update_track_selection_buttons(self):
+        index = self.tracks.index(self.selected_track)
+        self.previous_track_button.enabled = index > 0
+        self.next_track_button.enabled = index + 1 < len(self.tracks)
+        self.master_track_button.color = 'DefaultButton.On' if self.selected_track == self.song.master_track else 'DefaultButton.Off'
 
     def select_next_track(self):
         index = self._get_selected_track_index()

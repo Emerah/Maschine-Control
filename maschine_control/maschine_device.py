@@ -26,8 +26,8 @@ class MaschineDevice(DeviceComponent):
 
     __events__ = (u'bank',)
 
-    previous_bank_button = ButtonControl(color='DefaultButton.Off')  # , pressed_color='DefaultButton.On')
-    next_bank_button = ButtonControl(color='DefaultButton.Off')  # , pressed_color='DefaultButton.On')
+    previous_bank_button = ButtonControl(color='DefaultButton.On', pressed_color='DefaultButton.Off')
+    next_bank_button = ButtonControl(color='DefaultButton.On', pressed_color='DefaultButton.Off')
     bypass_device_button = ButtonControl(color='DefaultButton.Off')
 
     def __init__(self, info_display=None, *a, **k):
@@ -51,7 +51,7 @@ class MaschineDevice(DeviceComponent):
     def __on_bank_changed(self, device, bank):
         if device == self.device():
             self._set_bank_index(bank)
-            bank = self._bank or None
+            self.update_bank_buttons()
             self.notify_bank()
             self._display_message_on_maschine()
 
@@ -98,8 +98,8 @@ class MaschineDevice(DeviceComponent):
         self.bypass_device_button.color = 'DefaultButton.Off' if self.device_is_active else 'DefaultButton.On'
 
     def update_bank_buttons(self):
-        self.previous_bank_button.enabled = self.device() is not None
-        self.next_bank_button.enabled = self.device() is not None
+        self.previous_bank_button.enabled = self._bank is not None and self._bank.index > 0
+        self.next_bank_button.enabled = self._bank is not None and self._bank.index + 1 < self._bank.bank_count()
 
     def _set_device(self, device):
         super(MaschineDevice, self)._set_device(device)
