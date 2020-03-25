@@ -119,3 +119,6 @@ class MaschineElements(object):
         # self.down_button = create_button('Down', 32)
         # self.click_button = create_button('Click', 119)
         # self.encoder = create_encoder('Encoder', 118)
+
+        # touch strip control
+        self.touch_strip = create_knob('Touch_Strip', 12)

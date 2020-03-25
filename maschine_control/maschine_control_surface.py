@@ -27,6 +27,7 @@ from ableton.v2.control_surface.device_decorator_factory import DeviceDecoratorF
 from ableton.v2.control_surface.layer import Layer
 from ableton.v2.control_surface.mode import Mode, ModesComponent
 
+from .maschine_clip_position import MaschineClipPositionIndicator
 from .maschine_device import MaschineDevice
 from .maschine_device_navigation import MaschineDeviceNavigation
 from .maschine_device_parameter import MaschineDeviceParameter
@@ -61,6 +62,7 @@ class MaschineControlSurface(ControlSurface):
         with self.component_guard():
             self.create_auto_arm_component()
             self.create_view_switcher_component()
+            self.create_clip_position_indicator_component()
             self.create_transport_component()
             self.create_recording_component()
             self.create_track_creation_component()
@@ -113,6 +115,11 @@ class MaschineControlSurface(ControlSurface):
         self._view_switcher = MaschineView(info_display=self._info_display, name='View_Switcher', is_enabled=False)
         self._view_switcher.layer = Layer(view_button='arranger_button')
         self._view_switcher.set_enabled(True)
+
+    def create_clip_position_indicator_component(self):
+        self._clip_position = MaschineClipPositionIndicator(name='Clip_Position', is_enabled=False)
+        self._clip_position.layer = Layer(touch_strip_display='touch_strip')
+        self._clip_position.set_enabled(True)
 
     def create_transport_component(self):
         self._transport = MaschineTransport(name='Transport', is_enabled=False)

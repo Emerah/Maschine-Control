@@ -53,6 +53,10 @@ __arranger/session__
     
     switch between arrangement and session views [arranger button]
     
+__clip position display__
+
+    maschine mkiii touch strip displays the postition of the currently focused detail clip.
+
 ---
 
 ### Modes
