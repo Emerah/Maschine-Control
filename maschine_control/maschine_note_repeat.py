@@ -192,6 +192,9 @@ class MaschineNoteRepeatEnabler(Component):
     def _toggle_note_repeat(self):
         enabled = self.note_repeat_component.is_enabled()
         self._set_note_repeat_enabled(False if enabled else True)
+        self._display_message_on_maschine(enabled)
+
+    def _display_message_on_maschine(self, enabled):
         message = 'Note Repeate is {}'.format('Off' if enabled else 'Active')
         display_task = partial(self._info_display.display_message_on_maschine, message, 3)
         clear_task = partial(self._info_display.clear_display, 3)

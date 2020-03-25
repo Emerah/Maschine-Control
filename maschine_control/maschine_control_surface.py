@@ -41,6 +41,7 @@ from .maschine_skin import maschine_skin
 from .maschine_track_creation import MaschineTrackCreation
 from .maschine_track_navigation import MaschineTrackNavigation, MaschineTrackProvider
 from .maschine_transport import MaschineTransport
+from .maschine_view import MaschineView
 
 KEYBOARD_CHANNEL = 2
 DRUMS_CHANNEL = 1
@@ -59,6 +60,7 @@ class MaschineControlSurface(ControlSurface):
         self._maschine_injector = inject(element_container=const(self._elements)).everywhere()
         with self.component_guard():
             self.create_auto_arm_component()
+            self.create_view_switcher_component()
             self.create_transport_component()
             self.create_recording_component()
             self.create_track_creation_component()
@@ -106,6 +108,11 @@ class MaschineControlSurface(ControlSurface):
 
     def create_auto_arm_component(self):
         self._autoarm = AutoArmComponent(name='AutoArm')
+
+    def create_view_switcher_component(self):
+        self._view_switcher = MaschineView(info_display=self._info_display, name='View_Switcher', is_enabled=False)
+        self._view_switcher.layer = Layer(view_button='arranger_button')
+        self._view_switcher.set_enabled(True)
 
     def create_transport_component(self):
         self._transport = MaschineTransport(name='Transport', is_enabled=False)

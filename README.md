@@ -49,6 +49,10 @@ __instrument__:
     
     currently implemented only for cmaj
 
+__arranger/session__
+    
+    switch between arrangement and session views [arranger button]
+    
 ---
 
 ### Modes
@@ -83,6 +87,7 @@ __instrument__:
         - device active state notification
         - note repeate active state notification
         - new track notification
+        - current view notification
 
     information updates on changes in track, device, bank, and parameter selection, or change in parameters value. message 
     display operations are tasked the components and to the controller surface to enable timed and automated messages.

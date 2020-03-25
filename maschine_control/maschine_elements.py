@@ -74,7 +74,7 @@ class MaschineElements(object):
         self.plugin_button = create_button('Plugin', 35)
         self.mixer_button = create_button('Mixer', 37)
         self.browser_button = create_button('Browser', 38)
-
+        self.arranger_button = create_button('Arranger', 36)
         # transport buttons
         self.play_button = create_button('Play', 57)
         self.stop_button = create_button('Stop', 59)
