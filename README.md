@@ -94,8 +94,9 @@ __clip position display__
         - new track notification
         - current view notification
 
-    information updates on changes in track, device, bank, and parameter selection, or change in parameters value. message 
-    display operations are tasked the components and to the controller surface to enable timed and automated messages.
+    information updates on changes in track, device, bank, and parameter selection, or change in parameters value. 
+    message display operations are tasked to the components and to the controller surface to enable timed and
+    automated messages.
 
 #### Mixer Control Mode:
     
