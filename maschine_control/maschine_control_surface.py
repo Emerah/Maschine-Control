@@ -43,6 +43,7 @@ from .maschine_track_creation import MaschineTrackCreation
 from .maschine_track_navigation import MaschineTrackNavigation, MaschineTrackProvider
 from .maschine_transport import MaschineTransport
 from .maschine_view import MaschineView
+from ableton.v2.control_surface.elements.full_velocity_element import FullVelocityElement
 
 KEYBOARD_CHANNEL = 2
 DRUMS_CHANNEL = 1
@@ -71,6 +72,7 @@ class MaschineControlSurface(ControlSurface):
             self.create_drum_rack_component()
             self.create_device_component()
             self.create_playable_mode()
+            self.create_pad_matrix_modes()
             self.create_main_modes()
         self.set_feedback_channels(FEEDBACK_CHANNELS)
         self._show_welcome_message()
@@ -146,11 +148,23 @@ class MaschineControlSurface(ControlSurface):
 
     def create_drum_rack_component(self):
         self._drum_rack = MaschineDrumRack(translation_channel=DRUMS_CHANNEL, name='Drum_Rack', is_enabled=False)
-        self._drum_rack.layer = Layer(matrix='pad_matrix', scroll_page_down_button='chords_button', scroll_page_up_button='step_button')
+        full_velocity_element = FullVelocityElement(full_velocity=self._c_instance.full_velocity)
+        self._drum_rack.layer = Layer(matrix='pad_matrix', scroll_page_down_button='chords_button', scroll_page_up_button='step_button',
+                                      mute_button='mute_button', solo_button='solo_button', accent_button='fixed_vel_button', full_velocity=full_velocity_element)
 
     def create_keyboard_component(self):
         self._keyboard = MaschineKeyboard(translation_channel=KEYBOARD_CHANNEL, name='Keyboard', is_enabled=False)
         self._keyboard.layer = Layer(matrix='pad_matrix', scroll_down_button='chords_button', scroll_up_button='step_button')
+
+    def create_playable_mode(self):
+        self._playable_modes = MaschinePlayableModes(drum_rack=self._drum_rack, keyboard=self._keyboard, name='Playable_Modes', is_enabled=False)
+
+    def create_pad_matrix_modes(self):
+        self._pad_modes = ModesComponent('Pad_Modes', is_enabled=False)
+        self._pad_modes.add_mode('playable_modes', self._playable_modes)
+        self._pad_modes.layer = Layer(playable_modes_button='keyboard_button')
+        self._pad_modes.selected_mode = 'playable_modes'
+        self._pad_modes.set_enabled(True)
 
     def create_device_component(self):
         banking_info = BankingInfo(BANK_DEFINITIONS)
@@ -168,10 +182,6 @@ class MaschineControlSurface(ControlSurface):
         self._track_navigation = MaschineTrackNavigation(info_display=self._info_display, track_provider=MaschineTrackProvider(), name='Track_Navigation', is_enabled=False)
         self._track_navigation.layer = Layer(master_track_button='console_buttons[0]', previous_track_button='console_buttons[1]', next_track_button='console_buttons[2]')
         self._track_navigation.set_enabled(True)
-
-    def create_playable_mode(self):
-        self._playable_modes = MaschinePlayableModes(drum_rack=self._drum_rack, keyboard=self._keyboard, name='Playable_Modes', is_enabled=False)
-        self._playable_modes.set_enabled(True)
 
     def create_main_modes(self):
         self._main_modes = ModesComponent(name='Main_Modes')

@@ -143,29 +143,37 @@ class Colors:
             On = ON
             Off = OFF
 
+        class PlayableModes:
+            On = ON
+            Off = OFF
+
+    class Accent:
+        On = ON
+        Off = OFF
+
     class Keyboard:
-        NotePressed = MaschineIndexedColor.PURPLE
-        Natural = MaschineIndexedColor.YELLOW
-        Sharp = MaschineIndexedColor.BLUE
+        NotePressed = MaschineIndexedColor.WARMYELLOW
+        Natural = MaschineIndexedColor.YELLOWDim
+        Sharp = MaschineIndexedColor.BLUEDim
 
     class DrumGroup:
-        NotePressed = MaschineIndexedColor.BLUE
+        NotePressed = MaschineIndexedColor.WARMYELLOW
         PadEmpty = MaschineIndexedColor.BLACK
-        PadFilled = MaschineIndexedColor.YELLOW
-        PadSelected = MaschineIndexedColor.WHITE
-        PadSelectedNotSoloed = MaschineIndexedColor.CYAN
-        PadMuted = MaschineIndexedColor.ORANGE
-        PadMutedSelected = MaschineIndexedColor.CYAN
-        PadSoloed = MaschineIndexedColor.BLUE
-        PadSoloedSelected = MaschineIndexedColor.CYAN
-        PadQuadrant0 = MaschineIndexedColor.BLUE
-        PadQuadrant1 = MaschineIndexedColor.GREEN
-        PadQuadrant2 = MaschineIndexedColor.YELLOW
-        PadQuadrant3 = MaschineIndexedColor.PURPLE
-        PadQuadrant4 = MaschineIndexedColor.ORANGE
-        PadQuadrant5 = MaschineIndexedColor.CYAN
-        PadQuadrant6 = MaschineIndexedColor.PLUM
-        PadQuadrant7 = MaschineIndexedColor.WARMYELLOW
+        PadFilled = MaschineIndexedColor.YELLOWDim
+        PadSelected = MaschineIndexedColor.YELLOW
+        PadMuted = MaschineIndexedColor.ORANGEDim
+        PadMutedSelected = MaschineIndexedColor.ORANGE
+        PadSoloed = MaschineIndexedColor.BLUEDim
+        PadSelectedNotSoloed = MaschineIndexedColor.YELLOW
+        PadSoloedSelected = MaschineIndexedColor.BLUE
+        PadQuadrant0 = MaschineIndexedColor.BLUEDim
+        PadQuadrant1 = MaschineIndexedColor.GREENDim
+        PadQuadrant2 = MaschineIndexedColor.YELLOWDim
+        PadQuadrant3 = MaschineIndexedColor.PURPLEDim
+        PadQuadrant4 = MaschineIndexedColor.ORANGEDim
+        PadQuadrant5 = MaschineIndexedColor.CYANDim
+        PadQuadrant6 = MaschineIndexedColor.PLUMDim
+        PadQuadrant7 = MaschineIndexedColor.WARMYELLOWDim
 
 
 """

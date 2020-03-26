@@ -21,6 +21,7 @@ from ableton.v2.control_surface.elements.combo import ComboElement
 from ableton.v2.control_surface.elements.encoder import EncoderElement
 from ableton.v2.control_surface.input_control_element import MIDI_CC_TYPE, MIDI_NOTE_TYPE
 from ableton.v2.control_surface.resource import PrioritizedResource
+from ableton.v2.control_surface.elements.full_velocity_element import FullVelocityElement
 
 DEFAULT_CHANNEL = 15
 RELATIVE_SMOOTH = Live.MidiMap.MapMode.relative_smooth_two_compliment
@@ -97,6 +98,13 @@ class MaschineElements(object):
         self.pad_matrix = create_matrix(name='Pad_Matrix', controls=self.pads)
         self.chords_button = create_button('Chords', 83)
         self.step_button = create_button('Step', 84)
+
+        self.fixed_vel_button = create_button('Accent', 80)
+        self.keyboard_button = create_button('Keyboard', 82)
+        self.duplicate_button = create_button('Mute', 89)
+        self.select_button = create_button('Mute', 90)
+        self.solo_button = create_button('Mute', 91)
+        self.mute_button = create_button('Mute', 92)
 
         # console section controls
         self.console_buttons = [create_button('Console_{}'.format(index + 1), index + 22) for index in xrange(8)]

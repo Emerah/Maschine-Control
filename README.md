@@ -38,7 +38,10 @@ __drum rack__:
     play drum racks and scroll drum cells up and down [step-chords buttons to scroll drum cells] when a drum 
     rack has more than 16 pads to play, each cell page colors the pads differently.
 
-    drum pad solo, mute, select and delete (NotImplementedYet)
+    play drums racks with full velocity or in velocity sensetive mode.
+
+    solo and mute drum pads with color indicator of drum pad state
+
     playable simpler chopped loopes (NotImplementedYet)
 
 
