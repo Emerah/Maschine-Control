@@ -33,12 +33,14 @@ __note repeat__:
     note repeat with 8 rates straight and triplets (32t/32/16t/16/8t/8/4t/4) [use note repeat button to 
     enable or disable, and the 8 group buttons to select rate - default to 1/8]
 
+    selected note repeat rate is stored per track, and restored on track selection. (NotImplementedYet)
+
 __drum rack__:
 
     play drum racks and scroll drum cells up and down [step-chords buttons to scroll drum cells] when a drum 
     rack has more than 16 pads to play, each cell page colors the pads differently.
 
-    play drums racks with full velocity or in velocity sensetive mode.
+    play drums racks with full velocity or in velocity sensetive mode. [fixed vel button]
 
     solo and mute drum pads with color indicator of drum pad state
 
@@ -58,7 +60,7 @@ __arranger/session__
     
 __clip position display__
 
-    maschine mkiii touch strip displays the postition of the currently focused detail clip.
+    maschine mkiii touch strip displays the playing postition of the currently focused detail clip.
 
 ---
 
