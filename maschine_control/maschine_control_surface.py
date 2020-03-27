@@ -185,8 +185,8 @@ class MaschineControlSurface(ControlSurface):
 
     def create_main_modes(self):
         self._main_modes = ModesComponent(name='Main_Modes')
-        self._main_modes.add_mode('device_mode', Mode())
-        self._main_modes.add_mode('mixer_mode', Mode())
-        self._main_modes.add_mode('browser_mode', Mode())
-        self._main_modes.layer = Layer(device_mode_button='plugin_button', mixer_mode_button='mixer_button', browser_mode_button='browser_button')
-        self._main_modes.selected_mode = 'device_mode'
+        self._main_modes.add_mode('device_contol_mode', Mode())
+        self._main_modes.add_mode('mixer_contol_mode', Mode())
+        self._main_modes.add_mode('browser_contol_mode', Mode())
+        self._main_modes.layer = Layer(device_contol_mode_button='plugin_button', mixer_contol_mode_button='mixer_button', browser_contol_mode_button='browser_button')
+        self._main_modes.selected_mode = 'device_contol_mode'
