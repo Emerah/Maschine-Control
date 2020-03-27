@@ -192,6 +192,8 @@ class MaschineNoteRepeatEnabler(Component):
     def _toggle_note_repeat(self):
         enabled = self.note_repeat_component.is_enabled()
         self._set_note_repeat_enabled(False if enabled else True)
+        rate = self.note_repeat_component._get_internal_repeat_rate_index()
+        self.note_repeat_component.selected_rate = rate
         self._display_message_on_maschine(enabled)
 
     def _display_message_on_maschine(self, enabled):
@@ -206,7 +208,7 @@ class MaschineNoteRepeatEnabler(Component):
 
     def _set_note_repeat_enabled(self, is_enabled):
         self.note_repeat_component.set_enabled(is_enabled)
-        self.song.view.selected_track.set_data('maschine-note-repeat-rate', is_enabled)
+        self.song.view.selected_track.set_data('maschine-note-repeat-enabled', is_enabled)
         self.note_repeat_button.color = 'DefaultButton.On' if is_enabled else 'DefaultButton.Off'
 
     def _get_note_repeat_enabled(self):

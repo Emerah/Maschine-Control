@@ -33,7 +33,7 @@ __note repeat__:
     note repeat with 8 rates straight and triplets (32t/32/16t/16/8t/8/4t/4) [use note repeat button to 
     enable or disable, and the 8 group buttons to select rate - default to 1/8]
 
-    selected note repeat rate is stored per track, and restored on track selection. (NotImplementedYet)
+    selected note repeat rate is stored per track, and restored on track selection.
 
 __drum rack__:
 
