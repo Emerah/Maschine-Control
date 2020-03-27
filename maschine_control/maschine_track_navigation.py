@@ -336,6 +336,8 @@ class MaschineTrackNavigation(MaschineTrackListerComponent):
     __module__ = __name__
     next_track_button = ButtonControl(color='DefaultButton.On', pressed_color='DefaultButton.Off')
     previous_track_button = ButtonControl(color='DefaultButton.On', pressed_color='DefaultButton.Off')
+    first_track_button = ButtonControl(color='DefaultButton.On', pressed_color='DefaultButton.Off')
+    last_track_button = ButtonControl(color='DefaultButton.On', pressed_color='DefaultButton.Off')
     master_track_button = ButtonControl(color='DefaultButton.On', pressed_color='DefaultButton.Off')
     next_track_page_button = ButtonControl(color='DefaultButton.Off')
     previous_track_page_button = ButtonControl(color='DefaultButton.Off')
@@ -358,6 +360,12 @@ class MaschineTrackNavigation(MaschineTrackListerComponent):
     def set_previous_track_button(self, button):
         self.previous_track_button.set_control_element(button)
 
+    def set_last_track_button(self, button):
+        self.last_track_button.set_control_element(button)
+
+    def set_first_track_button(self, button):
+        self.first_track_button.set_control_element(button)
+
     def set_master_track_button(self, button):
         self.master_track_button.set_control_element(button)
 
@@ -368,6 +376,14 @@ class MaschineTrackNavigation(MaschineTrackListerComponent):
     @previous_track_button.pressed
     def _on_previous_track_button_pressed(self, button):
         self.select_previous_track()
+
+    @last_track_button.pressed
+    def _on_last_track_button_pressed(self, button):
+        self.select_last_track()
+
+    @first_track_button.pressed
+    def _on_first_track_button_pressed(self, button):
+        self.select_frist_track()
 
     @master_track_button.pressed
     def _on_master_track_button_pressed(self, button):
@@ -428,6 +444,18 @@ class MaschineTrackNavigation(MaschineTrackListerComponent):
         if not index == 0 and self._is_valid_index(index):
             traget_track = self.track_provider.tracks[index - 1]
             self._select_track(traget_track)
+
+    def select_last_track(self):
+        tracks = self.song.tracks
+        selected_track = self.song.view.selected_track
+        if tracks.index(selected_track) != tracks[-1]:
+            self._select_track(tracks[-1])
+
+    def select_first_track(self):
+        tracks = self.song.tracks
+        selected_track = self.song.view.selected_track
+        if tracks.index(selected_track) != tracks[0]:
+            self._select_track(tracks[0])
 
     def select_master_track(self):
         master = self.song.master_track

@@ -25,7 +25,7 @@ from ableton.v2.control_surface.control_surface import ControlSurface
 from ableton.v2.control_surface.default_bank_definitions import BANK_DEFINITIONS
 from ableton.v2.control_surface.device_decorator_factory import DeviceDecoratorFactory
 from ableton.v2.control_surface.layer import Layer
-from ableton.v2.control_surface.mode import Mode, ModesComponent
+from ableton.v2.control_surface.mode import LayerMode, Mode, ModesComponent
 
 from .maschine_clip_position import MaschineClipPositionIndicator
 from .maschine_device import MaschineDevice
@@ -185,7 +185,16 @@ class MaschineControlSurface(ControlSurface):
 
     def create_main_modes(self):
         self._main_modes = ModesComponent(name='Main_Modes')
-        self._main_modes.add_mode('device_contol_mode', Mode())
+        layer = Layer(bypass_device_button='console_buttons[4]', previous_bank_button='console_buttons[6]', next_bank_button='console_buttons[7]')  # ,  randomize_button='console_buttons[5]', reset_button='')
+        device_mode = LayerMode(self._device, layer=layer)
+        layer = Layer(parameter_controls='knob_matrix')
+        device_parameter_mode = LayerMode(self._device_parameter, layer=layer)
+        layer = Layer(select_buttons='group_matrix', previous_device_button='left_button', next_device_button='right_button', remove_device_button='remove_device_button',
+                      move_backward_button='move_backward_button', move_forward_button='move_forward_button')  # , previous_page_button='pitch_button', next_page_button='mod_button'
+        device_navigation_mode = LayerMode(self._device_navigation, layer=layer)
+        layer = Layer(master_track_button='console_buttons[0]', previous_track_button='console_buttons[1]', next_track_button='console_buttons[2]')
+        track_navigation_mode = LayerMode(self._track_navigation, layer=layer)
+        self._main_modes.add_mode('device_contol_mode', [device_mode, device_parameter_mode, device_navigation_mode, track_navigation_mode])
         self._main_modes.add_mode('mixer_contol_mode', Mode())
         self._main_modes.add_mode('browser_contol_mode', Mode())
         self._main_modes.layer = Layer(device_contol_mode_button='plugin_button', mixer_contol_mode_button='mixer_button', browser_contol_mode_button='browser_button')
