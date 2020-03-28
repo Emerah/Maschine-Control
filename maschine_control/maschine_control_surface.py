@@ -155,8 +155,9 @@ class MaschineControlSurface(ControlSurface):
                                       mute_button='mute_button', solo_button='solo_button', accent_button='fixed_vel_button', full_velocity=full_velocity_element)
 
     def create_keyboard_component(self):
-        self._keyboard = MaschineKeyboard(translation_channel=KEYBOARD_CHANNEL, name='Keyboard', is_enabled=False)
-        self._keyboard.layer = Layer(matrix='pad_matrix', scroll_down_button='chords_button', scroll_up_button='step_button')
+        self._keyboard = MaschineKeyboard(info_display=self._info_display, translation_channel=KEYBOARD_CHANNEL, name='Keyboard', is_enabled=False)
+        self._keyboard.layer = Layer(matrix='pad_matrix', scroll_down_button='chords_button', scroll_up_button='step_button',
+                                     next_scale_button='keyboard_button', previous_scale_button='pad_mode_button')
 
     def create_playable_mode(self):
         self._playable_modes = MaschinePlayableModes(drum_rack=self._drum_rack, keyboard=self._keyboard, name='Playable_Modes', is_enabled=False)
@@ -164,7 +165,7 @@ class MaschineControlSurface(ControlSurface):
     def create_pad_matrix_modes(self):
         self._pad_modes = ModesComponent('Pad_Modes', is_enabled=False)
         self._pad_modes.add_mode('playable_modes', self._playable_modes)
-        self._pad_modes.layer = Layer(playable_modes_button='keyboard_button')
+        # self._pad_modes.layer = Layer(playable_modes_button='keyboard_button')
         self._pad_modes.selected_mode = 'playable_modes'
         self._pad_modes.set_enabled(True)
 
