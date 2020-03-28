@@ -13,7 +13,8 @@
 #
 from __future__ import absolute_import, print_function, unicode_literals
 
-from _functools import partial
+
+from functools import partial
 from contextlib import contextmanager
 
 from ableton.v2.base import task
@@ -34,6 +35,7 @@ from .maschine_device_parameter import MaschineDeviceParameter
 from .maschine_drums import MaschineDrumRack
 from .maschine_elements import MaschineElements
 from .maschine_info_display import MaschineInfoDisplay
+
 from .maschine_keyboard import MaschineKeyboard
 from .maschine_note_repeat import MaschineNoteRepeatEnabler
 from .maschine_playable_modes import MaschinePlayableModes
