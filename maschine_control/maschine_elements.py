@@ -21,7 +21,7 @@ from ableton.v2.control_surface.elements.combo import ComboElement
 from ableton.v2.control_surface.elements.encoder import EncoderElement
 from ableton.v2.control_surface.input_control_element import MIDI_CC_TYPE, MIDI_NOTE_TYPE
 from ableton.v2.control_surface.resource import PrioritizedResource
-from ableton.v2.control_surface.elements.full_velocity_element import FullVelocityElement
+
 
 DEFAULT_CHANNEL = 15
 RELATIVE_SMOOTH = Live.MidiMap.MapMode.relative_smooth_two_compliment
@@ -100,6 +100,7 @@ class MaschineElements(object):
         self.step_button = create_button('Step', 84)
 
         self.fixed_vel_button = create_button('Accent', 80)
+        self.pad_mode_button = create_button('Pad_Mode', 81)
         self.keyboard_button = create_button('Keyboard', 82)
         self.duplicate_button = create_button('Mute', 89)
         self.select_button = create_button('Mute', 90)
@@ -125,8 +126,10 @@ class MaschineElements(object):
         self.move_forward_button = with_shift('Move_Forward', self.right_button)
         # self.up_button = create_button('Up', 30)
         # self.down_button = create_button('Down', 32)
-        # self.click_button = create_button('Click', 119)
-        # self.encoder = create_encoder('Encoder', 118)
+        self.click_button = create_button('Click', 119)
+        self.encoder = create_encoder('Encoder', 118)
+        self.volume_button = create_encoder('Volume', 118)
+        self.swing_button = create_encoder('Swing', 118)
 
         # touch strip control
         self.touch_strip = create_knob('Touch_Strip', 12)
