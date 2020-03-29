@@ -49,8 +49,9 @@ __drum rack__:
 
 __instrument__:
 
-    play instruments with selectable keys and scales with guide light of scale notes [step and chords buttons
-    to scroll octaves up and dow]
+    play instruments with selectable keys and scales with guide light of scale notes
+    
+    scroll keyboard octaves up and down [step and chords buttons]
 
     select scales with [pad mode and keyboard buttons]
 
@@ -65,7 +66,9 @@ __arranger/session__
 __clip position display__
 
     maschine mkiii touch strip displays the playing postition of the currently focused detail clip.
+    
     clip position display is disabled while recording.
+
 ---
 
 ### Modes
@@ -81,9 +84,8 @@ __clip position display__
         - create new audio, return, and midi tracks [shift + console buttons: 1, 2, 3]
 
         comming:  
-        - randomize selected device's parameters values. [console button: 6] (NotImplementedYet)
-        - reset selected device to default state. [shift + console button: 6] (NotImplementedYet)
-        - move devices in and out of a rack when one exists in the device chain.  (NotImplementedYet)
+        - reset selected device to default state. [console button: 6] (NotImplementedYet)
+        - randomize selected device's parameters values. [shifr + console button: 6] (NotImplementedYet)
         - select pages of devices when more than 8 devices are present on the selected track. (NotImplementedYet)
 
 
@@ -100,8 +102,10 @@ __clip position display__
         - selected parameter name and value
         - device active state notification
         - note repeate active state notification
+        - note repeat selected rate notification (NotImplementedYet)
         - new track notification
         - current view notification
+        - selected key and scale notification
 
     information updates on changes in track, device, bank, and parameter selection, or change in parameters value. 
     message display operations are tasked to the components and to the controller surface to enable timed and
