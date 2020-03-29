@@ -49,10 +49,14 @@ __drum rack__:
 
 __instrument__:
 
-    play instruments in key with selectable keys and scales with guide light of scale notes [ use step and 
-    chords buttons to scroll octaves up and dow]
+    play instruments with selectable keys and scales with guide light of scale notes [step and chords buttons
+    to scroll octaves up and dow]
+
+    select scales with [pad mode and keyboard buttons]
+
+    select keys with [shift + pad mode and keyboard button]
     
-    currently implemented only for cmaj
+    play in key where pad matrix only displays notes in the selected key and scale (NotImplementedYet)
 
 __arranger/session__
     
@@ -61,7 +65,7 @@ __arranger/session__
 __clip position display__
 
     maschine mkiii touch strip displays the playing postition of the currently focused detail clip.
-
+    clip position display is disabled while recording.
 ---
 
 ### Modes

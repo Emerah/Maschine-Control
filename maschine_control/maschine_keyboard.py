@@ -18,6 +18,8 @@ from ableton.v2.base.util import NamedTuple, clamp, find_if, memoize
 from ableton.v2.control_surface.components.playable import PlayableComponent
 from ableton.v2.control_surface.components.scroll import ScrollComponent
 from ableton.v2.control_surface.control.button import ButtonControl, PlayableControl
+from ableton.v2.base import task
+from functools import partial
 
 
 MAX_START_NOTE = 108
@@ -73,8 +75,10 @@ class MaschinePadMixin(object):
 class MaschineKeyboard(MaschinePadMixin, PlayableComponent, ScrollComponent):
     __events__ = ('scale', 'root_note')
 
-    next_scale_button = ButtonControl()
-    previous_scale_button = ButtonControl()
+    next_scale_button = ButtonControl(color='DefaultButton.Off', pressed_color='DefaultButton.On')
+    previous_scale_button = ButtonControl(color='DefaultButton.Off', pressed_color='DefaultButton.On')
+    next_key_button = ButtonControl(color='DefaultButton.Off', pressed_color='DefaultButton.On')
+    previous_key_button = ButtonControl(color='DefaultButton.Off', pressed_color='DefaultButton.On')
 
     def __init__(self, translation_channel, info_display, *a, **k):
         assert info_display is not None
@@ -82,8 +86,8 @@ class MaschineKeyboard(MaschinePadMixin, PlayableComponent, ScrollComponent):
         super(MaschineKeyboard, self).__init__(*a, **k)
         self._translation_channel = translation_channel
         self._scale = None
-        self._root_note = 0
-        self._start_note = self._root_note + 36
+        self._root_note = self.song.root_note
+        self._start_note = 36
         self.__on_selected_track_changed.subject = self.song.view
         self.__on_root_note_changed.subject = self.song
         self.__on_scale_name_changed.subject = self.song
@@ -93,28 +97,54 @@ class MaschineKeyboard(MaschinePadMixin, PlayableComponent, ScrollComponent):
     @next_scale_button.pressed
     def _on_next_scale_button_pressed(self, button):
         self.scroll_scales(1)
+        print('next scale button pressed')
+        self.pritng_debug_info()
 
     @previous_scale_button.pressed
     def _on_previous_scale_button_pressed(self, button):
         self.scroll_scales(-1)
+        print('previous scale button pressed')
+        self.pritng_debug_info()
+
+    @next_key_button.pressed
+    def _on_next_key_button_pressed(self, button):
+        self.scroll_keys(1)
+        print('next key button pressed')
+        self.pritng_debug_info()
+
+    @previous_key_button.pressed
+    def _on_previous_key_button_pressed(self, button):
+        self.scroll_keys(-1)
+        print('previous key button pressed')
+        self.pritng_debug_info()
+
+    def scroll_keys(self, offset):
+        index = clamp(self.root_note + offset, 0, 12)
+        if index in range(12):
+            print('checking root note index: {}'.format(index))
+            self.root_note = index
+            self._move_start_note(offset)
+            # self._update_led_feedback()
+            self._display_scale_and_key_info()
 
     def scroll_scales(self, offset):
         if self._scale:
-            scale_index = clamp(SCALES.index(self._scale) + offset, 0, len(SCALES))
+            scale_index = clamp(SCALES.index(self.scale) + offset, 0, len(SCALES))
             self.scale = SCALES[scale_index] or SCALES[0]
-            self._update_control_from_script()
             self._update_note_translations()
             self._update_led_feedback()
+            self._display_scale_and_key_info()
 
     @property
     def root_note(self):
-        return self.song.root_note
+        return self._root_note
 
     @root_note.setter
     def root_note(self, root_note):
+        # if root_note in range(12):
         self.song.root_note = root_note
         self._root_note = root_note
-        self._start_note += root_note
+        # self._move_start_note(root_note)
 
     @property
     def scale(self):
@@ -124,7 +154,6 @@ class MaschineKeyboard(MaschinePadMixin, PlayableComponent, ScrollComponent):
     def scale(self, scale):
         self._scale = scale
         self._song.scale_name = scale.name
-        # self.notify_scale(self._scale)
 
     @listens('root_note')
     def __on_root_note_changed(self):
@@ -167,7 +196,7 @@ class MaschineKeyboard(MaschinePadMixin, PlayableComponent, ScrollComponent):
         if not self._has_instrument():
             self._turn_matarix_buttons_off()
         else:
-            button.color = ('Keyboard.{}').format('Natural' if button.identifier % 12 in self.scale.notes else 'Sharp')
+            button.color = ('Keyboard.{}').format('Natural' if (button.identifier - self.root_note) % 12 in self.scale.notes else 'Sharp')
 
     def _turn_matarix_buttons_off(self):
         for button in self.matrix:
@@ -195,9 +224,34 @@ class MaschineKeyboard(MaschinePadMixin, PlayableComponent, ScrollComponent):
     def _note_translation_for_button(self, button):
         row, column = button.coordinate
         inverted_row = self.matrix.height - row - 1
-        return (inverted_row * self.matrix.width + column + self._start_note + self.root_note, self._translation_channel)
+        return (inverted_row * self.matrix.width + column + self._start_note, self._translation_channel)
 
     def _release_all_pads(self):
         for pad in self.matrix:
             if pad.is_pressed:
                 pad._release_button()
+
+    def _display_scale_and_key_info(self):
+        self._tasks.clear()
+        self._info_display.clear_display(3)
+        message = 'Key - {} | Scale - {}'.format(NOTE_NAMES[self.root_note], self.scale.name)
+        display_task = partial(self._info_display.display_message_on_maschine, message, 3)
+        clear_task = partial(self._info_display.clear_display, 3)
+        self._tasks.add(task.sequence(task.run(display_task), task.wait(1.5), task.run(clear_task)))
+
+    def pritng_debug_info(self):
+        scale = 'Scale: {}'.format(self.scale)
+        song_scale = 'Song Scale: {}'.format(self.song.scale_name)
+        key = 'Key: {}'.format(self.root_note)
+        song_key = 'Song Key: {}'.format(self.song.root_note)
+        start = 'Start note: {}'.format(self._start_note)
+        notes = 'Notes: {}'.format(self.scale.notes)
+        ids = map(lambda b: b.identifier, self.matrix)
+        print(scale)
+        print(song_scale)
+        print(key)
+        print(song_key)
+        print(start)
+        print(notes)
+        print(ids)
+        print('')

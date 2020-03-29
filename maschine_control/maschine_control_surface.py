@@ -157,7 +157,8 @@ class MaschineControlSurface(ControlSurface):
     def create_keyboard_component(self):
         self._keyboard = MaschineKeyboard(info_display=self._info_display, translation_channel=KEYBOARD_CHANNEL, name='Keyboard', is_enabled=False)
         self._keyboard.layer = Layer(matrix='pad_matrix', scroll_down_button='chords_button', scroll_up_button='step_button',
-                                     next_scale_button='keyboard_button', previous_scale_button='pad_mode_button')
+                                     next_scale_button='keyboard_button', previous_scale_button='pad_mode_button',
+                                     next_key_button='next_key_button', previous_key_button='previous_key_button')
 
     def create_playable_mode(self):
         self._playable_modes = MaschinePlayableModes(drum_rack=self._drum_rack, keyboard=self._keyboard, name='Playable_Modes', is_enabled=False)

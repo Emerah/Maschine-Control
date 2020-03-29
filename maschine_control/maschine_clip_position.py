@@ -39,10 +39,10 @@ class MaschineClipPositionIndicator(Component):
 
     @listens('playing_position')
     def __on_playing_position_changed(self):
-        print('position changed')
-        position = self._clip.playing_position
-        length = self._clip.length
-        self.touch_strip_display.value = position / length * 127
+        if not self._clip.is_recording:
+            position = self._clip.playing_position
+            length = self._clip.length
+            self.touch_strip_display.value = position / length * 127
 
     def _get_detail_clip(self):
         return self.song.view.detail_clip

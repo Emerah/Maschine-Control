@@ -107,6 +107,9 @@ class MaschineElements(object):
         self.solo_button = create_button('Mute', 91)
         self.mute_button = create_button('Mute', 92)
 
+        self.next_key_button = with_shift('Next_Key', self.keyboard_button)
+        self.previous_key_button = with_shift('Previous_Key', self.pad_mode_button)
+
         # console section controls
         self.console_buttons = [create_button('Console_{}'.format(index + 1), index + 22) for index in xrange(8)]
         self.console_matrix = create_matrix(name='Console_Matrix', controls=self.console_buttons)
