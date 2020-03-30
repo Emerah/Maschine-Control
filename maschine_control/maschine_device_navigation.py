@@ -13,6 +13,7 @@
 #
 from __future__ import absolute_import, print_function, unicode_literals
 
+from ableton.v2.base.dependency import depends
 from ableton.v2.base.event import listens
 from ableton.v2.base.util import index_if
 from ableton.v2.control_surface.components.device_navigation import DeviceNavigationComponent
@@ -38,6 +39,7 @@ class MaschineDeviceNavigation(DeviceNavigationComponent):
     previous_device_button = ButtonControl(color='ItemNavigation.ItemNotSelected', pressed_color='ItemNavigation.ItemSelected')
     remove_device_button = ButtonControl(color='DefaultButton.Off', pressed_color='DefaultButton.On')
 
+    @depends(info_display=None)
     def __init__(self, info_display=None, device_component=None, item_provider=None, *a, **k):
         assert info_display is not None
         self._info_display = info_display

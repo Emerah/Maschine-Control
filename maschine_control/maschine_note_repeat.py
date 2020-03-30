@@ -13,9 +13,11 @@
 #
 from __future__ import absolute_import, print_function, unicode_literals
 
-from _functools import partial
+from functools import partial
+
 
 from ableton.v2.base import task
+from ableton.v2.base.dependency import depends
 from ableton.v2.base.event import listens
 from ableton.v2.base.util import in_range
 from ableton.v2.control_surface.component import Component
@@ -159,6 +161,7 @@ class MaschineNoteRepeatEnabler(Component):
 
     note_repeat_button = ButtonControl(color='DefaultButton.Off')
 
+    @depends(info_display=None)
     def __init__(self, info_display=None, note_repeat=None, *a, **k):
         assert info_display is not None
         self._info_display = info_display

@@ -13,13 +13,14 @@
 #
 from __future__ import absolute_import, print_function, unicode_literals
 
+from ableton.v2.base.dependency import depends
 from ableton.v2.base.event import listens
 from ableton.v2.control_surface.components.device import DeviceComponent
 from ableton.v2.control_surface.parameter_provider import ParameterInfo
 from ableton.v2.base.util import clamp
 from ableton.v2.control_surface.control.button import ButtonControl
 from ableton.v2.base import task
-from _functools import partial
+from functools import partial
 
 
 class MaschineDevice(DeviceComponent):
@@ -30,7 +31,9 @@ class MaschineDevice(DeviceComponent):
     next_bank_button = ButtonControl(color='DefaultButton.On', pressed_color='DefaultButton.Off')
     bypass_device_button = ButtonControl(color='DefaultButton.Off')
 
+    @depends(info_display=None)
     def __init__(self, info_display=None, *a, **k):
+        assert info_display is not None
         self._info_display = info_display
         super(MaschineDevice, self).__init__(*a, **k)
         self.__on_bank_changed.subject = self._device_bank_registry

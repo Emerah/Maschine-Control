@@ -12,7 +12,10 @@
 # tools: VS Code (Free), PyCharm CE (Free)
 #
 from __future__ import absolute_import, print_function, unicode_literals
+
 import Live  # noqa
+
+from ableton.v2.base.dependency import depends
 from ableton.v2.base.event import listens
 from ableton.v2.base.util import NamedTuple, clamp, find_if, memoize
 from ableton.v2.control_surface.components.playable import PlayableComponent
@@ -80,7 +83,8 @@ class MaschineKeyboard(MaschinePadMixin, PlayableComponent, ScrollComponent):
     next_key_button = ButtonControl(color='DefaultButton.Off', pressed_color='DefaultButton.On')
     previous_key_button = ButtonControl(color='DefaultButton.Off', pressed_color='DefaultButton.On')
 
-    def __init__(self, translation_channel, info_display, *a, **k):
+    @depends(info_display=None)
+    def __init__(self, translation_channel, info_display=None, *a, **k):
         assert info_display is not None
         self._info_display = info_display
         super(MaschineKeyboard, self).__init__(*a, **k)
@@ -97,31 +101,31 @@ class MaschineKeyboard(MaschinePadMixin, PlayableComponent, ScrollComponent):
     @next_scale_button.pressed
     def _on_next_scale_button_pressed(self, button):
         self.scroll_scales(1)
-        print('next scale button pressed')
+        # print('next scale button pressed')
         # self.pritng_debug_info()
 
     @previous_scale_button.pressed
     def _on_previous_scale_button_pressed(self, button):
         self.scroll_scales(-1)
-        print('previous scale button pressed')
+        # print('previous scale button pressed')
         # self.pritng_debug_info()
 
     @next_key_button.pressed
     def _on_next_key_button_pressed(self, button):
         self.scroll_keys(1)
-        print('next key button pressed')
+        # print('next key button pressed')
         # self.pritng_debug_info()
 
     @previous_key_button.pressed
     def _on_previous_key_button_pressed(self, button):
         self.scroll_keys(-1)
-        print('previous key button pressed')
+        # print('previous key button pressed')
         # self.pritng_debug_info()
 
     def scroll_keys(self, offset):
         index = clamp(self.root_note + offset, 0, 12)
         if index in range(12):
-            print('checking root note index: {}'.format(index))
+            # print('checking root note index: {}'.format(index))
             self.root_note = index
             self._move_start_note(offset)
             self._display_scale_and_key_info()

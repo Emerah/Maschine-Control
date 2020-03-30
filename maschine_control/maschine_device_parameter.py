@@ -13,7 +13,7 @@
 #
 from __future__ import absolute_import, print_function, unicode_literals
 
-
+from ableton.v2.base.dependency import depends
 from ableton.v2.base.event import listens, listens_group
 from ableton.v2.control_surface.components import DisplayingDeviceParameterComponent
 
@@ -22,6 +22,7 @@ class MaschineDeviceParameter(DisplayingDeviceParameterComponent):
 
     # todo: this should eventually display parameter names when knobs get touched in device mode
 
+    @depends(info_display=None)
     def __init__(self, info_display=None, parameter_provider=None,  *a, **k):
         assert info_display is not None
         self._info_display = info_display
