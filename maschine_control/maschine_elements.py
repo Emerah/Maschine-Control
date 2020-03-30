@@ -136,3 +136,7 @@ class MaschineElements(object):
 
         # touch strip control
         self.touch_strip = create_knob('Touch_Strip', 12)
+
+        self.select_button = create_button('Select', 90)
+        self.selection_pads = list(reversed(self.pads))
+        self.selection_matrix = create_matrix('Selection_Matrix', self.selection_pads)

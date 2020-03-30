@@ -46,6 +46,7 @@ from .maschine_track_navigation import MaschineTrackNavigation, MaschineTrackPro
 from .maschine_transport import MaschineTransport
 from .maschine_view import MaschineView
 from ableton.v2.control_surface.elements.full_velocity_element import FullVelocityElement
+from ableton.v2.control_surface.components.background import BackgroundComponent
 
 KEYBOARD_CHANNEL = 2
 DRUMS_CHANNEL = 1
@@ -68,6 +69,7 @@ class MaschineControlSurface(ControlSurface):
             self.create_clip_position_indicator_component()
             self.create_transport_component()
             self.create_recording_component()
+            # self._create_background_component()
             self.create_track_creation_component()
             self.create_note_repeat_component()
             self.create_keyboard_component()
@@ -111,6 +113,10 @@ class MaschineControlSurface(ControlSurface):
         clear_display = partial(self._info_display.clear_display, 2)
         self._tasks.add(task.sequence(task.run(display_live_version), task.wait(1), task.run(clear_display), task.wait(0.2),
                                       task.run(partial(self._info_display.display_message_on_maschine, 'Track - {}'.format(self.song.view.selected_track.name), 2))))
+
+    def _create_background_component(self):
+        self._background = BackgroundComponent(name='Background', is_enabled=False, add_nop_listeners=True, layer=Layer(select_buttons='pad_matrix'))
+        self._background.set_enabled(True)
 
     def create_auto_arm_component(self):
         self._autoarm = AutoArmComponent(name='AutoArm')
@@ -156,9 +162,8 @@ class MaschineControlSurface(ControlSurface):
 
     def create_keyboard_component(self):
         self._keyboard = MaschineKeyboard(info_display=self._info_display, translation_channel=KEYBOARD_CHANNEL, name='Keyboard', is_enabled=False)
-        self._keyboard.layer = Layer(matrix='pad_matrix', scroll_down_button='chords_button', scroll_up_button='step_button',
-                                     next_scale_button='keyboard_button', previous_scale_button='pad_mode_button',
-                                     next_key_button='next_key_button', previous_key_button='previous_key_button')
+        self._keyboard.layer = Layer(matrix='pad_matrix', scroll_down_button='chords_button', scroll_up_button='step_button')
+        # ,next_scale_button='keyboard_button', previous_scale_button='pad_mode_button', next_key_button='next_key_button', previous_key_button='previous_key_button')
 
     def create_playable_mode(self):
         self._playable_modes = MaschinePlayableModes(drum_rack=self._drum_rack, keyboard=self._keyboard, name='Playable_Modes', is_enabled=False)
@@ -166,8 +171,11 @@ class MaschineControlSurface(ControlSurface):
     def create_pad_matrix_modes(self):
         self._pad_modes = ModesComponent('Pad_Modes', is_enabled=False)
         self._pad_modes.add_mode('playable_modes', self._playable_modes)
+        self._pad_modes.add_mode('selection_mode', self._track_navigation)
         # self._pad_modes.layer = Layer(playable_modes_button='keyboard_button')
-        self._pad_modes.selected_mode = 'playable_modes'
+        self._pad_modes.layer = Layer(selection_mode_button='select_button', playable_modes_button='keyboard_button')
+        # self._pad_modes.selected_mode = 'playable_modes'
+        self._pad_modes.selected_mode = 'selection_mode'
         self._pad_modes.set_enabled(True)
 
     def create_device_component(self):
@@ -187,7 +195,8 @@ class MaschineControlSurface(ControlSurface):
         layer = Layer(select_buttons='group_matrix', previous_device_button='left_button', next_device_button='right_button', remove_device_button='remove_device_button',
                       move_backward_button='move_backward_button', move_forward_button='move_forward_button')  # , previous_page_button='pitch_button', next_page_button='mod_button'
         device_navigation_mode = LayerMode(self._device_navigation, layer=layer)
-        layer = Layer(master_track_button='console_buttons[0]', previous_track_button='console_buttons[1]', next_track_button='console_buttons[2]')
+        layer = Layer(master_track_button='console_buttons[0]', previous_track_button='console_buttons[1]', next_track_button='console_buttons[2]', select_buttons='selection_matrix',
+                      previous_track_page_button='chords_button', next_track_page_button='step_button')
         track_navigation_mode = LayerMode(self._track_navigation, layer=layer)
         self._main_modes.add_mode('device_contol_mode', [device_mode, device_parameter_mode, device_navigation_mode, track_navigation_mode])
         self._main_modes.add_mode('mixer_contol_mode', Mode())

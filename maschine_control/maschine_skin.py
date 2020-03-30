@@ -133,6 +133,10 @@ class Colors:
             On = ON
             Off = OFF
 
+        class SelectionMode:
+            On = ON
+            Off = OFF
+
     class Accent:
         On = ON
         Off = OFF
@@ -146,6 +150,10 @@ class Colors:
         NoTrack = MaschineIndexedColor.BLACK
         TrackSelected = MaschineIndexedColor.ORANGE
         TrackNotSelected = MaschineIndexedColor.ORANGEDim
+        ReturnTrackSelected = MaschineIndexedColor.YELLOW
+        ReturnTrackNotSelected = MaschineIndexedColor.YELLOWDim
+        MasterTrackSelected = MaschineIndexedColor.LIME
+        MasterTrackNotSelected = MaschineIndexedColor.LIMEDim
 
     class NoteRepeat:
         RateSelected = MaschineIndexedColor.MINT
