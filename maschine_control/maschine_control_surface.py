@@ -173,19 +173,10 @@ class MaschineControlSurface(ControlSurface):
     def create_device_component(self):
         banking_info = BankingInfo(BANK_DEFINITIONS)
         decorator_factory = DeviceDecoratorFactory()
-        self._device = MaschineDevice(info_display=self._info_display, device_decorator_factory=decorator_factory, banking_info=banking_info, device_bank_registry=self._device_bank_registry, name='Device', is_enabled=False)
-        self._device.layer = Layer(bypass_device_button='console_buttons[4]', previous_bank_button='console_buttons[6]', next_bank_button='console_buttons[7]')  # ,  randomize_button='console_buttons[5]', reset_button='')
-        self._device.set_enabled(True)
-        self._device_parameter = MaschineDeviceParameter(info_display=self._info_display, parameter_provider=self._device, name='Device_Parameter', is_enabled=False)
-        self._device_parameter.layer = Layer(parameter_controls='knob_matrix')
-        self._device_parameter.set_enabled(True)
-        self._device_navigation = MaschineDeviceNavigation(info_display=self._info_display, device_component=self._device, name='Device_Navigation', is_enabled=False)
-        self._device_navigation.layer = Layer(select_buttons='group_matrix', previous_device_button='left_button', next_device_button='right_button', remove_device_button='remove_device_button',
-                                              move_backward_button='move_backward_button', move_forward_button='move_forward_button')  # , previous_page_button='pitch_button', next_page_button='mod_button'
-        self._device_navigation.set_enabled(True)
-        self._track_navigation = MaschineTrackNavigation(info_display=self._info_display, track_provider=MaschineTrackProvider(), name='Track_Navigation', is_enabled=False)
-        self._track_navigation.layer = Layer(master_track_button='console_buttons[0]', previous_track_button='console_buttons[1]', next_track_button='console_buttons[2]')
-        self._track_navigation.set_enabled(True)
+        self._device = MaschineDevice(info_display=self._info_display, device_decorator_factory=decorator_factory, banking_info=banking_info, device_bank_registry=self._device_bank_registry, name='Device')  # , is_enabled=False)
+        self._device_parameter = MaschineDeviceParameter(info_display=self._info_display, parameter_provider=self._device, name='Device_Parameter')  # , is_enabled=False)
+        self._device_navigation = MaschineDeviceNavigation(info_display=self._info_display, device_component=self._device, name='Device_Navigation')  # , is_enabled=False)
+        self._track_navigation = MaschineTrackNavigation(info_display=self._info_display, track_provider=MaschineTrackProvider(), name='Track_Navigation')  # , is_enabled=False)
 
     def create_main_modes(self):
         self._main_modes = ModesComponent(name='Main_Modes')

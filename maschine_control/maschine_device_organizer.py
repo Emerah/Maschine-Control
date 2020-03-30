@@ -56,9 +56,3 @@ class MaschineDeviceOrganizer(Component):
         device_index = list(parent.devices).index(self._device)
         if device_index < len(parent.devices) - 1:
             self.song.move_device(self._device, parent, device_index + 2)
-
-    def _move_out(self, rack, move_behind=False):
-        pass
-
-    def _move_in(self, rack, move_to_end=False):
-        pass

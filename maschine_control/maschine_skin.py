@@ -115,20 +115,6 @@ class Colors:
     class Mixer:
         pass
 
-    class ItemNavigation:
-        NoItem = MaschineIndexedColor.BLACK
-        ItemSelected = MaschineIndexedColor.LIME
-        ItemNotSelected = MaschineIndexedColor.LIMEDim
-
-    class TrackNavigation:
-        NoTrack = MaschineIndexedColor.BLACK
-        TrackSelected = MaschineIndexedColor.ORANGE
-        TrackNotSelected = MaschineIndexedColor.ORANGEDim
-
-    class NoteRepeat:
-        RateSelected = MaschineIndexedColor.MINT
-        RateUnselected = MaschineIndexedColor.MINTDim
-
     class Mode:
 
         class DeviceMode:
@@ -150,6 +136,20 @@ class Colors:
     class Accent:
         On = ON
         Off = OFF
+
+    class ItemNavigation:
+        NoItem = MaschineIndexedColor.BLACK
+        ItemSelected = MaschineIndexedColor.LIME
+        ItemNotSelected = MaschineIndexedColor.LIMEDim
+
+    class TrackNavigation:
+        NoTrack = MaschineIndexedColor.BLACK
+        TrackSelected = MaschineIndexedColor.ORANGE
+        TrackNotSelected = MaschineIndexedColor.ORANGEDim
+
+    class NoteRepeat:
+        RateSelected = MaschineIndexedColor.MINT
+        RateUnselected = MaschineIndexedColor.MINTDim
 
     class Keyboard:
         NotePressed = MaschineIndexedColor.WARMYELLOW

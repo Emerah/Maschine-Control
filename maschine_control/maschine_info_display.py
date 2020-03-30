@@ -19,7 +19,7 @@ from ableton.v2.base import depends
 
 class MaschineInfoDisplay(object):
     """
-    this object will be automatically injected into all classes subclassed from NIExtendedComponent.
+    this object will be automatically injected into all classes that depends on it.
     it has 3 main functions that should concern the end user:
         - display messages on Ableton status bar (Yellow bar)
         - display messages on Maschine MKiii screens

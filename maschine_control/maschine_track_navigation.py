@@ -287,10 +287,6 @@ class MaschineBasicTrackLister(Component):
 class MaschineTrackListerComponent(MaschineBasicTrackLister):
     __module__ = __name__
 
-    # color_class_name = 'TrackNavigation'
-    # select_buttons = control_list(ButtonControl, unavailable_color=color_class_name + '.NoTrack')
-    # select_buttons = control_list(ButtonControl, color=color_class_name + '.NoTrack')
-
     def __init__(self, *a, **k):
         super(MaschineTrackListerComponent, self).__init__(*a, **k)
         self._scroll_overlay = self.add_children(MaschineScrollOverlayComponent(is_enabled=True))
@@ -310,8 +306,6 @@ class MaschineTrackListerComponent(MaschineBasicTrackLister):
     @listens('tracks')
     def __on_tracks_changed(self):
         # self.select_buttons.control_count = len(self.tracks)
-        # for index, button in enumerate(self.select_buttons):
-        #     print(index, button)
         self._update_select_buttons()
         self._scroll_overlay.update_scroll_buttons()
 
@@ -321,9 +315,7 @@ class MaschineTrackListerComponent(MaschineBasicTrackLister):
 
     def _update_select_buttons(self):
         selected_track = self._track_provider.selected_track
-        # print('selected track: {}'.format(selected_track))
         for button, track in izip(self.select_buttons, self.tracks):
-            # print('button: {}, track: {}'.format(button, track))
             button.color = self._color_for_button(button.index, track == selected_track)
 
     def _color_for_button(self, button_index, is_selected):

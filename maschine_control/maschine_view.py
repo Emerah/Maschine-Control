@@ -59,7 +59,8 @@ class MaschineView(Component):
             pass
 
     def _display_message_on_maschine(self, view):
+        self._tasks.clear()
         message = 'In {} View'.format(view)
         display_task = partial(self._info_display.display_message_on_maschine, message, 3)
         clear_task = partial(self._info_display.clear_display, 3)
-        self._tasks.add(task.sequence(task.run(display_task), task.wait(1), task.run(clear_task)))
+        self._tasks.add(task.sequence(task.run(display_task), task.wait(1.5), task.run(clear_task)))

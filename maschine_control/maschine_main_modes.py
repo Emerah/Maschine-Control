@@ -16,9 +16,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 class MaschineMainModes(object):
 
-    """
-    move the 3 main modes to this object to observe track and mode changes.
-    """
+    # todo: move the 3 main modes to this object to observe track and mode changes.
 
     def __init__(self, *a, **k):
         super(MaschineMainModes, self).__init__(*a, **k)

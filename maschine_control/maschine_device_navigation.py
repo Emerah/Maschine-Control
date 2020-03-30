@@ -30,8 +30,9 @@ class MaschineDeviceNavigation(DeviceNavigationComponent):
         - remove the selected device from the device chain.
     """
 
-    # todo: this object should observe the appointed device and update select buttons page accordingly
     # todo: paging buttons should page through by 8 and not 1
+    # todo: add device resetting to default state
+    # todo: may be add parameter randomizer too?
 
     next_device_button = ButtonControl(color='ItemNavigation.ItemNotSelected', pressed_color='ItemNavigation.ItemSelected')
     previous_device_button = ButtonControl(color='ItemNavigation.ItemNotSelected', pressed_color='ItemNavigation.ItemSelected')

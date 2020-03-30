@@ -134,6 +134,6 @@ to indexed so that these buttons can listen to the scripts and display correct s
 from Live.
 
 Template offers 2 identical pages. one that displays information in mackie format. and one that displays
-the maschine midi mode background. switch to page 2 to see information.
+the maschine midi mode background.
 
 please keep that info in mind if you try to customize/relocate controls.

@@ -41,11 +41,10 @@ class MaschinePlayableModes(ModesComponent):
     @listens('target_track')
     def __on_target_track_changed(self):
         self._drum_rack_finder.device_parent = self._target_track.target_track
-        # self.update()
 
     @listens('instrument')
     def __on_drum_group_changed(self):
-        drum_group = self._drum_rack_finder.drum_group  # or self._drum_rack_finder.sliced_simpler
+        drum_group = self._drum_rack_finder.drum_group
         self._drum_rack.set_drum_group_device(drum_group)
         self.selected_mode = 'drums_mode' if liveobj_valid(drum_group) else 'keyboard_mode'
 

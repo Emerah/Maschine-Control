@@ -34,9 +34,6 @@ class PadMixin(object):
             button.set_mode(PlayableControl.Mode.playable_and_listenable)
             button.pressed_color = 'DrumGroup.NotePressed'
 
-    # def _on_matrix_pressed(self, button):
-    #     pass
-
     def _on_matrix_released(self, button):
         self._set_control_pads_from_script(False)
         self._update_button_color(button)
@@ -55,14 +52,11 @@ class MaschineDrumRack(PadMixin, DrumGroupComponent):
         self.__on_devices_changed.subject = track
         if not self._has_drum_rack():
             self._turn_matarix_buttons_off()
-        # else:
-        #     self._update_led_feedback()
 
     @listens('devices')
     def __on_devices_changed(self):
         if not self._has_drum_rack():
             self._turn_matarix_buttons_off()
-    #     # self._update_led_feedback()
 
     def _has_drum_rack(self):
         track = self.song.view.selected_track
