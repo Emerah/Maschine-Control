@@ -95,9 +95,9 @@ __track selection matrix__
         - select tracks from the live set. long press on selection buttons scroll through the tracks 
           quickly[console buttons: 1, 2, 3]
         - create new audio, return, and midi tracks [shift + console buttons: 1, 2, 3]
+        - reset selected device to default state. [console button: 6]
 
         comming:  
-        - reset selected device to default state. [console button: 6] (NotImplementedYet)
         - randomize selected device's parameters values. [shifr + console button: 6] (NotImplementedYet)
         - select pages of devices when more than 8 devices are present on the selected track. (NotImplementedYet)
 
