@@ -129,11 +129,11 @@ class Colors:
             On = ON
             Off = OFF
 
-        class PlayableModes:
+        class PlayableMode:
             On = ON
             Off = OFF
 
-        class SelectionMode:
+        class TrackSelectionMode:
             On = ON
             Off = OFF
 
@@ -150,8 +150,8 @@ class Colors:
         NoTrack = MaschineIndexedColor.BLACK
         TrackSelected = MaschineIndexedColor.ORANGE
         TrackNotSelected = MaschineIndexedColor.ORANGEDim
-        ReturnTrackSelected = MaschineIndexedColor.YELLOW
-        ReturnTrackNotSelected = MaschineIndexedColor.YELLOWDim
+        ReturnTrackSelected = MaschineIndexedColor.WARMYELLOW
+        ReturnTrackNotSelected = MaschineIndexedColor.WARMYELLOWDim
         MasterTrackSelected = MaschineIndexedColor.LIME
         MasterTrackNotSelected = MaschineIndexedColor.LIMEDim
 

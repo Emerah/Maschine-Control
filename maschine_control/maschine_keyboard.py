@@ -28,7 +28,6 @@ from functools import partial
 MAX_START_NOTE = 108
 SHARP_INDICES = (1, 3, 4, 6, 10, 13, 15)
 
-# NOTE_NAMES = (u'C', u'D\u266d', u'D', u'E\u266d', u'E', u'F', u'G\u266d', u'G', u'A\u266d', u'A', u'B\u266d', u'B')
 NOTE_NAMES = (u'C', u'Dflat', u'D', u'Eflat', u'E', u'F', u'Gflat', u'G', u'Aflat', u'A', u'Bflat', u'B')
 
 

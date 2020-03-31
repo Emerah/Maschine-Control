@@ -69,6 +69,16 @@ __clip position display__
     
     clip position display is disabled while recording.
 
+__track selection matrix__
+
+    enable/disable selection matrix [select button]
+    
+    select tracks via the pad matrix [pad matrix]
+    
+    scroll pages of 16 tracks [chords and step button]
+    
+    return tracks and master tracks are colored differenly for visual distinction
+
 ---
 
 ### Modes
@@ -80,7 +90,8 @@ __clip position display__
         - select parameter banks of the selected device. [console buttons: 7 and 8]
         - bypass/activate selected device. [console buttons: 5]
         - remove the selected device from the device chain. [shift + console button: 5]
-        - select tracks from the live set. [console buttons: 1, 2, 3]
+        - select tracks from the live set. long press on selection buttons scroll through the tracks 
+          quickly[console buttons: 1, 2, 3]
         - create new audio, return, and midi tracks [shift + console buttons: 1, 2, 3]
 
         comming:  

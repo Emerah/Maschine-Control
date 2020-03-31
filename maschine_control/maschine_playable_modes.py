@@ -1,6 +1,6 @@
 #
 # native instruments / ableton
-# maschine_note_modes.py
+# maschine_playable_modes.py
 #
 # created by Ahmed Emerah - (MaXaR)
 #
