@@ -35,7 +35,6 @@ class MaschineMatrixModes(ModesComponent):
     def is_enabled(self):
         return self._matrix_enabled
 
-    # @listens('')
     @listens('selected_mode')
     def __on_selected_mode_changed(self, mode):
-        print('selected mode: {}'.format(mode))
+        pass

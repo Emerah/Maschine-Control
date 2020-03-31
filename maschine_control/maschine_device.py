@@ -30,6 +30,7 @@ class MaschineDevice(DeviceComponent):
     previous_bank_button = ButtonControl(color='DefaultButton.On', pressed_color='DefaultButton.Off')
     next_bank_button = ButtonControl(color='DefaultButton.On', pressed_color='DefaultButton.Off')
     bypass_device_button = ButtonControl(color='DefaultButton.Off')
+    reset_parameters_button = ButtonControl(color='DefaultButton.Off')
 
     @depends(info_display=None)
     def __init__(self, info_display=None, *a, **k):
@@ -37,6 +38,7 @@ class MaschineDevice(DeviceComponent):
         self._info_display = info_display
         super(MaschineDevice, self).__init__(*a, **k)
         self.__on_bank_changed.subject = self._device_bank_registry
+        self._quantized_parameters = {}
         self.update_bank_buttons()
 
     @property
@@ -67,6 +69,9 @@ class MaschineDevice(DeviceComponent):
     def set_bypass_device_button(self, button):
         self.bypass_device_button.set_control_element(button)
 
+    def set_reset_parameters_button(self, button):
+        self.reset_parameters_button.set_control_element(button)
+
     @previous_bank_button.pressed
     def _on_previous_bank_button_pressed(self, button):
         self.select_previous_bank()
@@ -80,6 +85,10 @@ class MaschineDevice(DeviceComponent):
         self.toggle_device_active_state()
         self.update_bypass_button()
 
+    @reset_parameters_button.pressed
+    def _on_reset_parameters_button_pressed(self, button):
+        self.reset_device_parameters()
+
     def select_previous_bank(self):
         self._scroll_banks(-1)
 
@@ -89,6 +98,16 @@ class MaschineDevice(DeviceComponent):
     def toggle_device_active_state(self):
         if self.device():
             self.device().parameters[0].value = 0 if self.device_is_active else 1
+
+    def reset_device_parameters(self):
+        parameters = self.device().parameters
+        for i in range(0, len(parameters)):
+            p = parameters[i]
+            if not p.is_quantized:
+                p.value = p.default_value
+            else:
+                if p.name in self._quantized_parameters:
+                    p.value = self._quantized_parameters[p.name]
 
     def _scroll_banks(self, offset):
         if self._bank:
@@ -110,7 +129,14 @@ class MaschineDevice(DeviceComponent):
         self.update_bank_buttons()
         self.update_bypass_button()
         if device:
+            self._collect_device_quantized_parameters(device)
             self._display_message_on_maschine()
+
+    def _collect_device_quantized_parameters(self, device):
+        parameters = device.parameters
+        for parameter in parameters:
+            if parameter.is_quantized:
+                self._quantized_parameters[parameter.name] = parameter.value
 
     def _create_parameter_info(self, parameter, name):
         parameter_info = ParameterInfo(parameter=parameter, name=name, default_encoder_sensitivity=1.0, fine_grain_encoder_sensitivity=0.1)

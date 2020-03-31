@@ -79,6 +79,8 @@ __track selection matrix__
     
     return tracks and master tracks are colored differenly for visual distinction
 
+    selection button is momentrary facilitate faster work flow.
+
 ---
 
 ### Modes

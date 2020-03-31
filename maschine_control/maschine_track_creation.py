@@ -74,10 +74,20 @@ class MaschineTrackCreation(Component):
         self._display_message_on_maschine('audio')
 
     def _create_new_return_track(self):
-        self.song.create_return_track()
-        self._display_message_on_maschine('return')
+        if len(self.song.return_tracks) < 12:
+            self.song.create_return_track()
+            self._display_message_on_maschine('return')
+        else:
+            self._info_display.clear_display(3)
+            self._tasks.clear()
+            message = 'Only 12 sends allowed'
+            display_task = partial(self._info_display.display_message_on_maschine, message, 3)
+            clear_display = partial(self._info_display.clear_display, 3)
+            self._tasks.add(task.sequence(task.run(display_task), task.wait(1), task.run(clear_display)))
 
     def _display_message_on_maschine(self, track_type):
+        self._tasks.clear()
+        self._info_display.clear_display(3)
         message = 'Created New {} Track'.format(track_type)
         display_task = partial(self._info_display.display_message_on_maschine, message, 3)
         clear_display = partial(self._info_display.clear_display, 3)

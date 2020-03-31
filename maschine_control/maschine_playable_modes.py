@@ -36,7 +36,7 @@ class MaschinePlayableModes(ModesComponent):
 
     @listens('selected_mode')
     def __on_selected_mode_changed(self, mode):
-        print('selected mode: {}'.format(mode))
+        pass
 
     @listens('target_track')
     def __on_target_track_changed(self):

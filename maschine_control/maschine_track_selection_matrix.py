@@ -294,9 +294,12 @@ class MaschineTrackListerComponent(MaschineBasicTrackLister):
 
     @listens('tracks')
     def __on_tracks_changed(self):
-        self.select_buttons.control_count = len(self.tracks)
-        self._update_select_buttons()
+        self.select_buttons.control_count = max(len(self.tracks), self._num_visible_tracks)
+        if self.select_buttons.control_count > len(self.tracks):
+            for button in list(self.select_buttons):
+                button.color = self.color_class_name + '.NoTrack'
         self._scroll_overlay.update_scroll_buttons()
+        # self._update_select_buttons()
 
     @listens('selected_track')
     def __on_selected_track_changed(self):
@@ -308,9 +311,7 @@ class MaschineTrackListerComponent(MaschineBasicTrackLister):
             button.color = self._color_for_button(button.index, track == selected_track)
 
     def _color_for_button(self, button_index, is_selected):
-        if is_selected:
-            return self.color_class_name + '.TrackSelected'
-        return self.color_class_name + '.TrackNotSelected'
+        pass
 
 
 class MaschineTrackSelectionMatrix(MaschineTrackListerComponent):
@@ -332,10 +333,12 @@ class MaschineTrackSelectionMatrix(MaschineTrackListerComponent):
     def _color_for_button(self, button_index, is_selected):
         tracks = self.track_provider.tracks
         color = self.color_class_name
-        if tracks[button_index + self.track_offset] == self.song.master_track:
-            return color + '.MasterTrackSelected' if is_selected else color + '.MasterTrackNotSelected'
-        elif len(self.song.return_tracks) > 0 and tracks[button_index + self.track_offset] in self.song.return_tracks:
+        if button_index > len(self.track_provider.tracks):
+            return color + '.NoTrack'
+        if len(self.song.return_tracks) > 0 and tracks[button_index + self.track_offset] in self.song.return_tracks:
             return color + '.ReturnTrackSelected' if is_selected else color + '.ReturnTrackNotSelected'
+        elif tracks[button_index + self.track_offset] == self.song.master_track:
+            return color + '.MasterTrackSelected' if is_selected else color + '.MasterTrackNotSelected'
         else:
             return color + '.TrackSelected' if is_selected else color + '.TrackNotSelected'
 
@@ -360,8 +363,6 @@ class MaschineTrackSelectionMatrix(MaschineTrackListerComponent):
         if not self.selected_track.devices:
             self._info_display.clear_display(1)
             self._info_display.clear_display(3)
-        index = list(self.track_provider.tracks).index(current_track)
-        print('track {}, index {}, offest {}'.format(current_track.name, index, self.track_offset))
 
     @listens('name')
     def __on_name_changed(self):
@@ -422,6 +423,8 @@ class MaschineTrackSelectionMatrix(MaschineTrackListerComponent):
             self._info_display.display_message_on_maschine('Master Track Selected', 2)
 
     def _on_select_button_pressed(self, button):
+        if button.index > len(self.track_provider.tracks):
+            return
         self._select_track(self.tracks[button.index].track)
 
 
@@ -470,8 +473,3 @@ class MaschineTrackSelectionMatrixEnabler(Component):
     def _set_selection_matrix_enabled(self, enabled):
         self.selection_matrix.set_enabled(enabled)
         self.selection_matrix_button.color = 'DefaultButton.On' if enabled else 'DefaultButton.Off'
-        if enabled:
-            self.selection_matrix._update_select_buttons()
-        else:
-            for button in self.selection_matrix.select_buttons:
-                button.color = 'DefaultButton.Off'

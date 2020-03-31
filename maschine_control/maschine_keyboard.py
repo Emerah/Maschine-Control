@@ -100,31 +100,22 @@ class MaschineKeyboard(MaschinePadMixin, PlayableComponent, ScrollComponent):
     @next_scale_button.pressed
     def _on_next_scale_button_pressed(self, button):
         self.scroll_scales(1)
-        # print('next scale button pressed')
-        # self.pritng_debug_info()
 
     @previous_scale_button.pressed
     def _on_previous_scale_button_pressed(self, button):
         self.scroll_scales(-1)
-        # print('previous scale button pressed')
-        # self.pritng_debug_info()
 
     @next_key_button.pressed
     def _on_next_key_button_pressed(self, button):
         self.scroll_keys(1)
-        # print('next key button pressed')
-        # self.pritng_debug_info()
 
     @previous_key_button.pressed
     def _on_previous_key_button_pressed(self, button):
         self.scroll_keys(-1)
-        # print('previous key button pressed')
-        # self.pritng_debug_info()
 
     def scroll_keys(self, offset):
         index = clamp(self.root_note + offset, 0, 12)
         if index in range(12):
-            # print('checking root note index: {}'.format(index))
             self.root_note = index
             self._move_start_note(offset)
             self._display_scale_and_key_info()
@@ -238,20 +229,3 @@ class MaschineKeyboard(MaschinePadMixin, PlayableComponent, ScrollComponent):
         display_task = partial(self._info_display.display_message_on_maschine, message, 3)
         clear_task = partial(self._info_display.clear_display, 3)
         self._tasks.add(task.sequence(task.run(display_task), task.wait(1.5), task.run(clear_task)))
-
-    # def pritng_debug_info(self):
-    #     scale = 'Scale: {}'.format(self.scale)
-    #     song_scale = 'Song Scale: {}'.format(self.song.scale_name)
-    #     key = 'Key: {}'.format(self.root_note)
-    #     song_key = 'Song Key: {}'.format(self.song.root_note)
-    #     start = 'Start note: {}'.format(self._start_note)
-    #     notes = 'Notes: {}'.format(self.scale.notes)
-    #     ids = map(lambda b: b.identifier, self.matrix)
-    #     print(scale)
-    #     print(song_scale)
-    #     print(key)
-    #     print(song_key)
-    #     print(start)
-    #     print(notes)
-    #     print(ids)
-    #     print('')
