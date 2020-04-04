@@ -1,6 +1,6 @@
 #
 # maschine / ableton
-# maschine_track_selection_matrix.py
+# maschine_track_selection.py
 #
 # created by Ahmed Emerah - (MaXaR)
 #
@@ -314,7 +314,7 @@ class MaschineTrackListerComponent(MaschineBasicTrackLister):
         pass
 
 
-class MaschineTrackSelectionMatrix(MaschineTrackListerComponent):
+class MaschineTrackSelection(MaschineTrackListerComponent):
 
     previous_track_page_button = ButtonControl(color='DefaultButton.Off')
     next_track_page_button = ButtonControl(color='DefaultButton.Off')
@@ -324,7 +324,7 @@ class MaschineTrackSelectionMatrix(MaschineTrackListerComponent):
         assert info_display is not None
         self._info_display = info_display
         self._track_list = track_provider
-        super(MaschineTrackSelectionMatrix, self).__init__(track_provider=self._track_list, *a, **k)
+        super(MaschineTrackSelection, self).__init__(track_provider=self._track_list, *a, **k)
         self.register_disconnectable(self._track_list)
         self.__on_selected_track_changed.subject = self.song.view
         self.__on_selected_track_changed()
@@ -354,10 +354,7 @@ class MaschineTrackSelectionMatrix(MaschineTrackListerComponent):
     @listens('selected_track')
     def __on_selected_track_changed(self):
         current_track = self.song.view.selected_track
-        if self.selected_track != current_track:
-            self.song.view.selected_track = current_track
-            self._update_track_provider(current_track)
-            self._update_select_buttons()
+        self._update_track_provider(current_track)
         self.__on_name_changed.subject = self.selected_track
         self._display_track_name(self.selected_track)
         if not self.selected_track.devices:
@@ -428,7 +425,7 @@ class MaschineTrackSelectionMatrix(MaschineTrackListerComponent):
         self._select_track(self.tracks[button.index].track)
 
 
-class MaschineTrackSelectionMatrixEnabler(Component):
+class MaschineTrackSelectionEnabler(Component):
     """
     this object wraps the track selection matrix. it enable and disable the
     selection matrix so that it act like a layer of selection buttons when enabled.
@@ -444,9 +441,9 @@ class MaschineTrackSelectionMatrixEnabler(Component):
         assert info_display is not None
         assert track_provider is not None
         self._info_display = info_display
-        super(MaschineTrackSelectionMatrixEnabler, self).__init__(*a, **k)
+        super(MaschineTrackSelectionEnabler, self).__init__(*a, **k)
         self._track_provider = track_provider
-        self.selection_matrix = MaschineTrackSelectionMatrix(info_display=info_display, track_provider=track_provider, parent=self, name='Selection_Matrix', is_enabled=False)
+        self.selection_matrix = MaschineTrackSelection(info_display=info_display, track_provider=track_provider, parent=self, name='Selection_Matrix', is_enabled=False)
 
     def set_select_buttons(self, buttons):
         self.selection_matrix.set_select_buttons(buttons)

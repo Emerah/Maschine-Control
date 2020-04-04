@@ -42,8 +42,8 @@ from .maschine_recording import MaschineRecording
 from .maschine_skin import maschine_skin
 from .maschine_track_creation import MaschineTrackCreation
 from .maschine_track_navigation import MaschineTrackNavigator
-from .maschine_track_selection_matrix import MaschineTrackProvider
-from .maschine_track_selection_matrix import MaschineTrackSelectionMatrix
+from .maschine_track_selection import MaschineTrackProvider
+from .maschine_track_selection import MaschineTrackSelection
 from .maschine_transport import MaschineTransport
 from .maschine_view import MaschineView
 
@@ -161,7 +161,7 @@ class MaschineControlSurface(ControlSurface):
                                      previous_scale_button='pad_mode_button', next_key_button='next_key_button', previous_key_button='previous_key_button')
 
     def create_track_selection_matrix_component(self):
-        self._track_selection_matrix = MaschineTrackSelectionMatrix(track_provider=MaschineTrackProvider(), name='Track_Selection_Matrix', is_enabled=False)
+        self._track_selection_matrix = MaschineTrackSelection(track_provider=MaschineTrackProvider(), name='Track_Selection_Matrix', is_enabled=False)
         self._track_selection_matrix.layer = Layer(select_buttons='selection_matrix', previous_track_page_button='chords_button', next_track_page_button='step_button')
 
     def create_playable_mode(self):
