@@ -43,6 +43,8 @@ class MaschineDeviceNavigation(DeviceNavigationComponent):
     previous_device_button = ButtonControl(color='ItemNavigation.ItemNotSelected', pressed_color='ItemNavigation.ItemSelected')
     next_chain_button = ButtonControl(color='ItemNavigation.ItemNotSelected', pressed_color='ItemNavigation.ItemSelected')
     previous_chain_button = ButtonControl(color='ItemNavigation.ItemNotSelected', pressed_color='ItemNavigation.ItemSelected')
+    next_page_button = ButtonControl(color='DefaultButton.Off', pressed_color='DefaultButton.On')
+    previous_page_button = ButtonControl(color='DefaultButton.Off', pressed_color='DefaultButton.On')
     remove_device_button = ButtonControl(color='DefaultButton.Off', pressed_color='DefaultButton.On')
     collapse_device_button = ButtonControl(color='DefaultButton.Off')
 
@@ -94,6 +96,12 @@ class MaschineDeviceNavigation(DeviceNavigationComponent):
     def set_collapse_device_button(self, button):
         self.collapse_device_button.set_control_element(button)
 
+    def set_next_page_button(self, button):
+        self.next_page_button.set_control_element(button)
+
+    def set_previous_page_button(self, button):
+        self.previous_page_button.set_control_element(button)
+
     @previous_device_button.pressed
     def _on_previous_device_button_pressed(self, _):
         self.select_previous_device()
@@ -117,6 +125,14 @@ class MaschineDeviceNavigation(DeviceNavigationComponent):
     @previous_chain_button.pressed
     def _on_previous_chain_button_pressed(self, button):
         self.select_previous_chain_in_rack()
+
+    @next_page_button.pressed
+    def _on_next_page_button_pressed(self, button):
+        self.select_next_device_page()
+
+    @previous_page_button.pressed
+    def _on_previous_page_button_pressed(self, button):
+        self.select_previous_device_page()
 
     def select_next_device(self):
         index = self._get_selected_device_index()
@@ -172,9 +188,9 @@ class MaschineDeviceNavigation(DeviceNavigationComponent):
         if device:
             rack = is_rack(device)
             if rack:
-                if len(list(device.chains)) > 1:
-                    showing_chains = device.is_showing_chains
-                    device.is_showing_chains = False if showing_chains else True
+                # if len(list(device.chains)) > 1:
+                #     showing_chains = device.is_showing_chains
+                #     device.is_showing_chains = False if showing_chains else True
                 showing_devices = device.view.is_showing_chain_devices
                 device.view.is_showing_chain_devices = False if showing_devices else True
 
@@ -194,6 +210,32 @@ class MaschineDeviceNavigation(DeviceNavigationComponent):
             return self.color_class_name + '.RackItemSelected' if is_selected else self.color_class_name + '.RackItemNotSelected'
         else:
             return self.color_class_name + '.ItemSelected' if is_selected else self.color_class_name + '.ItemNotSelected'
-        # if is_selected:
-        #     return self.color_class_name + '.ItemSelected'
-        # return self.color_class_name + '.ItemNotSelected'
+
+    def can_scroll_left(self):
+        return self.item_offset > 0
+
+    def can_scroll_right(self):
+        devices = self._item_provider.items
+        return self.item_offset < len(devices) - self._num_visible_items
+
+    def scroll_left(self):
+        offset = max(0, self.item_offset - self._num_visible_items)
+        self.item_offset = offset
+
+    def scroll_right(self):
+        offset = self.item_offset + self._num_visible_items
+        self.item_offset = offset
+
+    def link_selection(self):
+        device = self._item_provider.items[self.item_offset][0]
+        self._select_item(device)
+
+    def select_next_device_page(self):
+        if self.can_scroll_right():
+            self.scroll_right()
+            self.link_selection()
+
+    def select_previous_device_page(self):
+        if self.can_scroll_left():
+            self.scroll_left()
+            self.link_selection()

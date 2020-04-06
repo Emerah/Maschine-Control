@@ -126,8 +126,8 @@ class MaschineElements(object):
         # main encoder section controls
         self.right_button = create_button('right', 31)
         self.left_button = create_button('Left', 33)
-        self.move_backward_button = with_shift('Move_Backward', self.left_button)
-        self.move_forward_button = with_shift('Move_Forward', self.right_button)
+        self.move_backward_button = with_shift('Move_Backward', self.console_buttons[6])
+        self.move_forward_button = with_shift('Move_Forward', self.console_buttons[7])
         self.up_button = create_button('Up', 30)
         self.down_button = create_button('Down', 32)
         self.click_button = create_button('Click', 118)
@@ -141,3 +141,6 @@ class MaschineElements(object):
         self.select_button = create_button('Select', 90)
         self.selection_pads = list(reversed(self.pads))
         self.selection_matrix = create_matrix('Selection_Matrix', self.selection_pads)
+
+        self.next_device_page_button = with_shift('Next_Device_Page', self.right_button)
+        self.previous_device_page_button = with_shift('Previous_Device_Page', self.left_button)

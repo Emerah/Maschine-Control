@@ -88,18 +88,21 @@ __track selection matrix__
 #### Device Control Mode:
     in device mode you can:
         - select devices from the device chain. [encoder buttons: left and right]
-        - move devices backward and forward in the device chain. [shift + encoder buttons: left and right]
+        - control selected device's parameters [console knobs]
+        - reset selected device to default state. [console button: 6]
+        - randomize selected device's parameters values. [shift + console button: 6]
+        - select pages of devices when more than 8 devices are present on the selected track. [shift +
+          4-D encoder left and right buttons]
+        - move devices backward and forward in the device chain. [shift + console buttons 7 + 8]
         - select parameter banks of the selected device. [console buttons: 7 and 8]
+        - select rack chains is the selected device is an instrument or drum rack [4-D encoder up and down]
+        - show/hide chain devices if the selected device is an instrument or drum rack [4-D encoder click]
         - bypass/activate selected device. [console buttons: 5]
         - remove the selected device from the device chain. [shift + console button: 5]
+        - collapse/show selected device [4-D encoder click]
         - select tracks from the live set. long press on selection buttons scroll through the tracks 
           quickly[console buttons: 1, 2, 3]
         - create new audio, return, and midi tracks [shift + console buttons: 1, 2, 3]
-        - reset selected device to default state. [console button: 6]
-
-        comming:  
-        - randomize selected device's parameters values. [shifr + console button: 6] (NotImplementedYet)
-        - select pages of devices when more than 8 devices are present on the selected track. (NotImplementedYet)
 
 
 #### Information Display:
@@ -119,6 +122,7 @@ __track selection matrix__
         - new track notification
         - current view notification
         - selected key and scale notification
+        - warning message when trying to create more than 12 sends
 
     information updates on changes in track, device, bank, and parameter selection, or change in parameters value. 
     message display operations are tasked to the components and to the controller surface to enable timed and

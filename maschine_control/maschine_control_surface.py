@@ -193,7 +193,7 @@ class MaschineControlSurface(ControlSurface):
         device_parameter_mode = LayerMode(self._device_parameter, layer=layer)
         layer = Layer(select_buttons='group_matrix', previous_device_button='left_button', next_device_button='right_button', remove_device_button='remove_device_button',
                       move_backward_button='move_backward_button', move_forward_button='move_forward_button', collapse_device_button='click_button',
-                      next_chain_button='down_button', previous_chain_button='up_button')
+                      next_chain_button='down_button', previous_chain_button='up_button', next_page_button='next_device_page_button', previous_page_button='previous_device_page_button')
         device_navigation_mode = LayerMode(self._device_navigation, layer=layer)
         layer = Layer(master_track_button='console_buttons[0]', previous_track_button='console_buttons[1]', next_track_button='console_buttons[2]')
         track_navigation_mode = LayerMode(self._track_navigation, layer=layer)
