@@ -145,6 +145,8 @@ class Colors:
         NoItem = MaschineIndexedColor.BLACK
         ItemSelected = MaschineIndexedColor.LIME
         ItemNotSelected = MaschineIndexedColor.LIMEDim
+        RackItemSelected = MaschineIndexedColor.PLUM
+        RackItemNotSelected = MaschineIndexedColor.PLUMDim
 
     class TrackNavigation:
         NoTrack = MaschineIndexedColor.BLACK

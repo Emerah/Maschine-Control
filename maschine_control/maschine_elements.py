@@ -115,6 +115,7 @@ class MaschineElements(object):
         self.console_matrix = create_matrix(name='Console_Matrix', controls=self.console_buttons)
 
         self.remove_device_button = with_shift('Remove', self.console_buttons[4])
+        self.randomize_parameters_button = with_shift('Randomize', self.console_buttons[5])
         self.return_track_button = with_shift('New_Return', self.console_buttons[0])
         self.audio_track_button = with_shift('New_Audio', self.console_buttons[1])
         self.midi_track_button = with_shift('New_Midi', self.console_buttons[2])
@@ -127,10 +128,10 @@ class MaschineElements(object):
         self.left_button = create_button('Left', 33)
         self.move_backward_button = with_shift('Move_Backward', self.left_button)
         self.move_forward_button = with_shift('Move_Forward', self.right_button)
-        # self.up_button = create_button('Up', 30)
-        # self.down_button = create_button('Down', 32)
-        self.click_button = create_button('Click', 119)
-        self.encoder = create_encoder('Encoder', 118)
+        self.up_button = create_button('Up', 30)
+        self.down_button = create_button('Down', 32)
+        self.click_button = create_button('Click', 118)
+        self.encoder = create_encoder('Encoder', 119)
         self.volume_button = create_encoder('Volume', 118)
         self.swing_button = create_encoder('Swing', 118)
 
