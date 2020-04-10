@@ -13,14 +13,15 @@ __script folder__: drop 'maschine_control' folder to your 'MIDI Remote Scripts'.
 is not open or if it was open when you copied the folder, please restart Live.
 
 
-__ports__: select the script and set both in and out ports to 'Maschine Virtual In/Output' (named
-differently under windows). and activate  'Track' and 'Remote' for both ports.
+__ports__: in Live midi settings select the script and set both in and out ports to 
+'Maschine Virtual In/Output' (named differently under windows). and activate  
+'Track' and 'Remote' for both ports.
 
 __controller editor__: open the 'Maschine-Control' template in the controller editor and use it
 with the script
 
 
-__tested under Live 10.1.9__
+__developned and tested under macOS 10.15.x and Mojave 10.14.6 and Live 10.1.9__
 
 ---
 
