@@ -5,10 +5,30 @@ n a Maschine MK3, every control is accessible and programmable from Ableton pyth
 the 2 screens. Until NI gives us access to its HID interface, we are stuck with the ugly mackie
 protocol to display information on Maschine MK3 displays. __WHAT A WASTE__
 
+---
 
-### Common Controls
+## SETUP:
 
-__shift button__: restart button in the transport section is used for shited operations.  
+__script folder__: drop 'maschine_control' folder to your 'MIDI Remote Scripts'. make sure Live
+is not open or if it was open when you copied the folder, please restart Live.
+
+
+__ports__: select the script and set both in and out ports to 'Maschine Virtual In/Output' (named
+differently under windows). and activate  'Track' and 'Remote' for both ports.
+
+__controller editor__: open the 'Maschine-Control' template in the controller editor and use it
+with the script
+
+
+__tested under Live 10.1.9__
+
+---
+
+## Common Controls
+
+__shift button__: 
+    
+    restart button in the transport section is used for shited operations.  
 
 ---
 __transport__:  
