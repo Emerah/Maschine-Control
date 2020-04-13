@@ -355,6 +355,7 @@ class MaschineTrackSelection(MaschineTrackListerComponent):
     def __on_selected_track_changed(self):
         current_track = self.song.view.selected_track
         self._update_track_provider(current_track)
+        # self._update_track_offset()
         self.__on_name_changed.subject = self.selected_track
         self._display_track_name(self.selected_track)
         if not self.selected_track.devices:
@@ -410,6 +411,15 @@ class MaschineTrackSelection(MaschineTrackListerComponent):
 
     def _update_track_provider(self, track):
         self._track_list.selected_track = track
+
+    # def _update_track_offset(self):
+    #     # offset = self.track_offset
+    #     tracks = self.track_provider.tracks
+    #     index = tracks.index(self.track_provider.selected_track)
+    #     new_offset = index / self._num_visible_tracks
+    #     print(new_offset)
+    #     self.track_offset = new_offset
+    #     self._create_track_slots()
 
     def _display_track_name(self, track):
         if track in self.song.visible_tracks:

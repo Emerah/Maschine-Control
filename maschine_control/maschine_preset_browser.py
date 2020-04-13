@@ -13,10 +13,15 @@
 #
 from __future__ import absolute_import, print_function, unicode_literals
 
-"""
-this object enables hotswapping presets for the selected effect or instrument device
 
-how it will work on the hw controller level:
+from ableton.v2.control_surface.component import Component
+
+
+class MaschinePresetBrowser(Component):
+    """
+    this object enables hotswapping presets for the selected effect or instrument device
+
+    how it will work on the hw controller level:
     in device control mode, user will click the 4-D encoder to enable hotswapping for the selected device.
     the Live browser will open if it were hidden, to the location of the current preset of the selected
     device. if no presets present for the device, a message will display on Maschine MKiii display that
@@ -35,14 +40,6 @@ how it will work on the hw controller level:
 
     a decision has to be made about whihc list style to utilize.
 
-"""
-
-from ableton.v2.control_surface.component import Component
-
-
-class MaschinePresetBrowser(Component):
-
+    """
     preset_scroller = None
     action_button = None
-
-    pass

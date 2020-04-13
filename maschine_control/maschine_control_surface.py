@@ -46,6 +46,7 @@ from .maschine_track_selection import MaschineTrackProvider
 from .maschine_track_selection import MaschineTrackSelection
 from .maschine_transport import MaschineTransport
 from .maschine_view import MaschineView
+from .maschine_welcome import MaschineWelcome
 
 KEYBOARD_CHANNEL = 2
 DRUMS_CHANNEL = 1
@@ -73,10 +74,11 @@ class MaschineControlSurface(ControlSurface):
             self.create_drum_rack_component()
             self.create_keyboard_component()
             self.create_track_selection_matrix_component()
-            self.create_device_component()
             self.create_playable_mode()
             self.create_pad_matrix_modes()
+            self.create_device_component()
             self.create_main_modes()
+            self.create_welcome_component()
         self.set_feedback_channels(FEEDBACK_CHANNELS)
         self._show_welcome_message()
         self.show_message('Maschine MKiii - ' + str(self.live_version))
@@ -115,6 +117,11 @@ class MaschineControlSurface(ControlSurface):
 
     def create_auto_arm_component(self):
         self._autoarm = AutoArmComponent(name='AutoArm')
+
+    def create_welcome_component(self):
+        self._welcome = MaschineWelcome(name='Welcome')
+        self._welcome.layer = Layer(pads='pad_matrix', group_buttons='group_matrix')
+        self._tasks.add(task.sequence(task.wait(2), task.run(partial(self._welcome.set_enabled, False))))
 
     def create_view_switcher_component(self):
         self._view_switcher = MaschineView(name='View_Switcher', is_enabled=False)
@@ -169,11 +176,11 @@ class MaschineControlSurface(ControlSurface):
 
     def create_pad_matrix_modes(self):
         self._pad_modes = ModesComponent('Pad_Modes', is_enabled=False)
-        self._pad_modes.add_mode('playable_mode', self._playable_mode)
-        self._pad_modes.add_mode('track_selection_mode', self._track_selection_matrix)
         self._pad_modes.layer = Layer(cycle_mode_button='select_button')
-        self._pad_modes.selected_mode = 'playable_mode'
-        self._track_selection_matrix.set_enabled(True)
+        self._pad_modes.add_mode('track_selection_mode', self._track_selection_matrix)
+        self._pad_modes.add_mode('playable_mode', self._playable_mode)
+        self._pad_modes.selected_mode = 'track_selection_mode'
+        # self._pad_modes.selected_mode = 'playable_mode'
         self._pad_modes.set_enabled(True)
 
     def create_device_component(self):
