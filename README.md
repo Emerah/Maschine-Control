@@ -14,14 +14,11 @@ is not open or if it were open when you copied the folder, please restart Live.
 
 
 __ports__: in Live midi settings select the script and set both in and out ports to 
-'Maschine Virtual In/Output' (named slightly differently under windows). and activate  
-'Track' and 'Remote' for both ports.
-
+'Maschine Virtual In/Output' (named slightly differently under windows). and activate 'Track' and 'Remote' for both ports.
 __controller editor__: open the 'Maschine-Control' template in the controller editor and use it
 with the script
 
-
-developned and tested under macOS 10.15.x and 10.14.6
+developed and tested under macOS 10.15.x and 10.14.6
 
 ---
 

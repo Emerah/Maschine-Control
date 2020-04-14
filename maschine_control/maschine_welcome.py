@@ -22,7 +22,7 @@ from ableton.v2.base import task
 from ableton.v2.control_surface.component import Component
 from ableton.v2.control_surface.control.button import ButtonControl
 from ableton.v2.control_surface.control.control_list import control_list
-from explor.maschine_skin import MaschineIndexedColor
+from .maschine_skin import MaschineIndexedColor
 # import time
 # from functools import partial
 
