@@ -175,13 +175,11 @@ class MaschineControlSurface(ControlSurface):
         self._playable_mode = MaschinePlayableModes(drum_rack=self._drum_rack, keyboard=self._keyboard, name='Playable_Modes', is_enabled=False)
 
     def create_pad_matrix_modes(self):
-        self._pad_modes = ModesComponent('Pad_Modes', is_enabled=False)
+        self._pad_modes = ModesComponent('Pad_Modes')
         self._pad_modes.layer = Layer(cycle_mode_button='select_button')
-        self._pad_modes.add_mode('track_selection_mode', self._track_selection_matrix)
         self._pad_modes.add_mode('playable_mode', self._playable_mode)
+        self._pad_modes.add_mode('track_selection_mode', self._track_selection_matrix)
         self._pad_modes.selected_mode = 'track_selection_mode'
-        # self._pad_modes.selected_mode = 'playable_mode'
-        self._pad_modes.set_enabled(True)
 
     def create_device_component(self):
         banking_info = BankingInfo(BANK_DEFINITIONS)

@@ -38,9 +38,9 @@ class MaschineDevice(DeviceComponent):
     def __init__(self, info_display=None, *a, **k):
         assert info_display is not None
         self._info_display = info_display
+        self._quantized_parameters = {}
         super(MaschineDevice, self).__init__(*a, **k)
         self.__on_bank_changed.subject = self._device_bank_registry
-        self._quantized_parameters = {}
         self.update_bank_buttons()
 
     @property

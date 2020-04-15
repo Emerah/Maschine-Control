@@ -62,10 +62,13 @@ class MaschinePadMixin(object):
     __module__ = __name__
 
     def set_matrix(self, matrix):
-        super(MaschinePadMixin, self).set_matrix(matrix)
-        for button in self.matrix:
+        self.matrix.set_control_element(matrix)
+        self._reset_selected_pads()
+        self._update_note_translations()
+        for button in list(self.matrix):
             button.set_mode(PlayableControl.Mode.playable_and_listenable)
             button.pressed_color = 'Keyboard.NotePressed'
+            self._update_button_color(button)
 
     def _on_matrix_pressed(self, _):
         pass
@@ -143,8 +146,8 @@ class MaschineKeyboard(MaschinePadMixin, PlayableComponent, ScrollComponent):
 
     @scale.setter
     def scale(self, scale):
-        self._scale = scale
         self._song.scale_name = scale.name
+        self._scale = scale
 
     @listens('root_note')
     def __on_root_note_changed(self):
